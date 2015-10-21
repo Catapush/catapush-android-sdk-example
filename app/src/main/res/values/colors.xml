@@ -4,9 +4,10 @@
 
     <!-- Customizable Catapush color -->
     <color name="catapush_message_list_item_bg">#ffffff</color>
+    <color name="catapush_message_border_color">#2844e1</color>
+
     <color name="catapush_message_title_color">#000000</color>
     <color name="catapush_message_subtitle_color">#999292</color>
     <color name="catapush_message_datetime_color">#ff9d9d9d</color>
-    <color name="catapush_message_border_color">#2844e1</color>
 
 </resources>
