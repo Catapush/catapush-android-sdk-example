@@ -8,10 +8,13 @@ This project shows how quickly Catapush Android SDK can be integrated into your 
 ## Usage
 
 1. Clone this repo;
-2. Place your *Catapush App Key* and your *GCM SenderID* in **/res/strings.xml**;
-3. In `MainActivity`, replace example identifier and password with your proper ones;
+2. Place your *Catapush App Key* and your *GCM SenderID* in **/res/values/strings.xml**;
+3. Create a new user with your [Catapush Dashboard](http://www.catapush.com/) and, in `MainActivity`, replace example identifier and password with your proper ones;
 4. Run the app;
-5. Access your [Catapush Dashboard](http://www.catapush.com/) and send some important message.
+5. Back to your [Catapush Dashboard](http://www.catapush.com/) and send some important message.
+
+Note:
+Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device.
 
 ## Advanced
 
@@ -25,7 +28,7 @@ Catapush SDK provides full support for `RecyclerView` via `CatapushRecyclerViewA
 
 ### Customization
 #### Colors
-Catapush provides a default color scheme that you can override to achieve the user experience you want. To customize the color scheme, you will need to create these colors in your **res/colors.xml**:
+Catapush provides a default color scheme that you can override to achieve the user experience you want. To customize the color scheme, you will need to create these colors in your **res/values/colors.xml**:
 
 ```html
 <color name="catapush_message_list_item_bg">#b6e6ed</color>
@@ -41,7 +44,7 @@ Changing these colors, you will change the previous image into this:
 [![](/images/messages.2.png?raw=true)]()
 
 #### Text
-Catapush provides a default text style that you can override to achieve the user experience you want. To customize the text, you will need to create these styles in your **res/styles.xml**
+Catapush provides a default text style that you can override to achieve the user experience you want. To customize the text, you will need to create these styles in your **res/values/styles.xml**
 
 ```html
 <style name="catapush_message_title" parent="android:Widget.TextView">
@@ -67,7 +70,7 @@ Catapush provides a default text style that you can override to achieve the user
 </style>        
 ```
 
-These styles relay on **colors** and **dimensions**. You can override Catapush default dimensions adding these values to your **res/dimens.xml** file:
+These styles relay on **colors** and **dimensions**. You can override Catapush default dimensions adding these values to your **res/values/dimens.xml** file:
 
 ```html
 <dimen name="catapush_message_title_size">22sp</dimen>
