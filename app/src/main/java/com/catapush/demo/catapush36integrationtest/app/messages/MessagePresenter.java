@@ -1,9 +1,8 @@
 package com.catapush.demo.catapush36integrationtest.app.messages;
 
 import com.catapush.demo.catapush36integrationtest.app.communications.Actions;
-import com.catapush.demo.catapush36integrationtest.app.R;
 import com.catapush.library.Catapush;
-import com.catapush.library.notifications.Notification;
+import com.catapush.library.interfaces.Callback;
 import com.catapush.library.storage.models.IPMessage;
 
 import org.parceler.Parcels;
@@ -12,7 +11,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
+
+import java.util.List;
 
 public class MessagePresenter {
 
@@ -41,27 +41,20 @@ public class MessagePresenter {
     };
 
     private void onMessageReceived(Intent intent) {
-        mView.setMessage(Parcels.<IPMessage>unwrap(intent.getParcelableExtra("ipmessage")));
+        mView.addMessage(Parcels.<IPMessage>unwrap(intent.getParcelableExtra("ipmessage")));
     }
 
-    public void startCatapush(Uri sound) {
-        Notification notification = Notification.builder()
-                .isSwipeToDismissEnabled(false)
-                .contentTitle("CATAPUSH TEST")
-                .iconId(R.drawable.ic_stat_notify)
-                .isVibrationEnabled(true)
-                .vibrationPattern(new long[]{100, 200, 100, 300})
-                .isSoundEnabled(true)
-                .soundResourceUri(sound)
-                .isLedEnabled(true)
-                .ledColor(0xFFFF0000)
-                .ledOnMS(2000)
-                .ledOffMS(1000)
-                .build();
+    public void getMessages() {
+        Catapush.getInstance().getAllMessagesAsList(new Callback<List<IPMessage>>() {
+            @Override
+            public void success(List<IPMessage> messages) {
+                mView.setMessages(messages);
+            }
 
-        Catapush.getInstance()
-                .setPush(notification)
-                .setLogging(true)
-                .start("test-android", "test-android");
+            @Override
+            public void failure(Throwable throwable) {
+
+            }
+        });
     }
 }

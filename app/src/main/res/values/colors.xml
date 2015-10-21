@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="message_list_bg">#84c83c</color>
+
+    <!-- Customizable Catapush color -->
+    <color name="catapush_message_list_item_bg">#e2c3c3</color>
+    <color name="catapush_message_title_color">#283ec9</color>
+    <color name="catapush_message_subtitle_color">#ff0000</color>
+    <color name="catapush_message_datetime_color">#ff9d9d9d</color>
+    <color name="catapush_message_border_color">#e2c3c3</color>
+
+</resources>

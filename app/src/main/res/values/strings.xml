@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Catapush 3.6 Integration Test</string>
+    <string name="app_name">Catapush Example</string>
 
     <string name="catapush_app_key"> </string>
     <string name="gcm_sender_id"> </string>

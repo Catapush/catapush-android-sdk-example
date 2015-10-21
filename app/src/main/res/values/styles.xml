@@ -5,4 +5,26 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Customizable Catapush elements -->
+    <style name="catapush_message_title" parent="android:Widget.TextView">
+        <item name="android:singleLine">false</item>
+        <item name="android:textColor">@color/catapush_message_title_color</item>
+        <item name="android:textSize">@dimen/catapush_message_title_size</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="catapush_message_subtitle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/catapush_message_subtitle_color</item>
+        <item name="android:textSize">@dimen/catapush_message_list_item_subtitle_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="catapush_message_datetime" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/catapush_message_datetime_color</item>
+        <item name="android:textSize">@dimen/catapush_message_list_item_datetime_size</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:typeface">sans</item>
+    </style>
 </resources>

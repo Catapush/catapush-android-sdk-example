@@ -2,4 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Customizable Catapush dimen -->
+    <dimen name="catapush_message_title_size">22sp</dimen>
+    <dimen name="catapush_message_list_item_padding">5dp</dimen>
+    <dimen name="catapush_message_list_item_subtitle_size">18sp</dimen>
+    <dimen name="catapush_message_list_item_datetime_size">6sp</dimen>
 </resources>
