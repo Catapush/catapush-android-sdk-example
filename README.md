@@ -27,7 +27,7 @@ Catapush SDK provides full support for `RecyclerView` via `CatapushRecyclerViewA
 #### Colors
 Catapush provides a default color scheme that you can override to achieve the user experience you want. To customize the color scheme, you will need to create these colors in your **res/colors.xml**:
 
-```
+```html
 <color name="catapush_message_list_item_bg">#b6e6ed</color>
 <color name="catapush_message_border_color">#b6e6ed</color>
 
@@ -43,36 +43,39 @@ Changing these colors, you will change the previous image into this:
 #### Text
 Catapush provides a default text style that you can override to achieve the user experience you want. To customize the text, you will need to create these styles in your **res/styles.xml**
 
+```html
+<style name="catapush_message_title" parent="android:Widget.TextView">
+    <item name="android:singleLine">false</item>
+    <item name="android:textColor">@color/catapush_message_title_color</item>
+    <item name="android:textSize">@dimen/catapush_message_title_size</item>
+    <item name="android:typeface">sans</item>
+    <item name="android:textStyle">normal</item>
+</style>
 
-    <style name="catapush_message_title" parent="android:Widget.TextView">
-        <item name="android:singleLine">false</item>
-        <item name="android:textColor">@color/catapush_message_title_color</item>
-        <item name="android:textSize">@dimen/catapush_message_title_size</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:textStyle">normal</item>
-    </style>
+<style name="catapush_message_subtitle" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/catapush_message_subtitle_color</item>
+    <item name="android:textSize">@dimen/catapush_message_list_item_subtitle_size</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:typeface">sans</item>
+</style>
 
-    <style name="catapush_message_subtitle" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/catapush_message_subtitle_color</item>
-        <item name="android:textSize">@dimen/catapush_message_list_item_subtitle_size</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">sans</item>
-    </style>
+<style name="catapush_message_datetime" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/catapush_message_datetime_color</item>
+    <item name="android:textSize">@dimen/catapush_message_list_item_datetime_size</item>
+    <item name="android:textStyle">italic</item>
+    <item name="android:typeface">sans</item>
+</style>        
+```
 
-    <style name="catapush_message_datetime" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/catapush_message_datetime_color</item>
-        <item name="android:textSize">@dimen/catapush_message_list_item_datetime_size</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:typeface">sans</item>
-    </style>        
- 
 These styles relay on **colors** and **dimensions**. You can override Catapush default dimensions adding these values to your **res/dimens.xml** file:
 
-    <dimen name="catapush_message_title_size">22sp</dimen>
-    <dimen name="catapush_message_list_item_padding">5dp</dimen>
-    <dimen name="catapush_message_list_item_subtitle_size">12sp</dimen>
-    <dimen name="catapush_message_list_item_datetime_size">6sp</dimen>
-    
+```html
+<dimen name="catapush_message_title_size">22sp</dimen>
+<dimen name="catapush_message_list_item_padding">5dp</dimen>
+<dimen name="catapush_message_list_item_subtitle_size">12sp</dimen>
+<dimen name="catapush_message_list_item_datetime_size">6sp</dimen>
+```
+
 Changing this dimensions like this will produce this result:
 
 ![image](https://raw.githubusercontent.com/Catapush/android-example/master/images/messages.3.png)
