@@ -53,5 +53,5 @@ dependencies {
 
     compile('com.google.android.gms:play-services-gcm:8.1.0')
 
-    compile 'com.catapush:catapush-android-sdk:7fa1a4a59f'
+    compile 'com.catapush:catapush-android-sdk:-SNAPSHOT'
 }
