@@ -83,6 +83,13 @@ Changing these dimensions like this will produce this result:
 
 ![](/images/messages.3.png?raw=true)
 
+#### Corners
+Catapush message bubbles come with rounded corners. You can change them overriding this property in your **res/values/dimens.xml** file:
+
+    <dimen name="catapush_message_corner_radius">10dp</dimen>
+
+If you don't want rounded corners at all, simply set it to `0dp`.
+
 
 [![Analytics](https://ga-beacon.appspot.com/UA-60582915-4/android-example/readme)](https://github.com/igrigorik/ga-beacon)
 
