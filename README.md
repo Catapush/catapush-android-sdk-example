@@ -90,6 +90,8 @@ Catapush message bubbles come with rounded corners. You can change them overridi
 
 If you don't want rounded corners at all, simply set it to `0dp`.
 
+## Contatcs
+If you need help, you have feedbacks or questions, send us a mail at **info [at] catapush [dot] com**
 
 [![Analytics](https://ga-beacon.appspot.com/UA-60582915-4/android-example/readme)](https://github.com/igrigorik/ga-beacon)
 
