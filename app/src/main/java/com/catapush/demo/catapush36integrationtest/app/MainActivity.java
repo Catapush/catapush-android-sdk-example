@@ -9,16 +9,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TitleChange {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
+            MessageFragment messageFragment = new MessageFragment();
+            messageFragment.setTitleChanger(this);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new MessageFragment())
-                    .commit();
+                .add(R.id.container, messageFragment)
+                .commit();
         }
 
         if (!Catapush.getInstance().isRunning()) {
@@ -43,22 +45,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void startCatapush(Uri sound) {
         Notification notification = Notification.builder()
-                .isSwipeToDismissEnabled(false)
-                .contentTitle("CATAPUSH TEST")
-                .iconId(R.drawable.ic_stat_notify)
-                .isVibrationEnabled(true)
-                .vibrationPattern(new long[]{100, 200, 100, 300})
-                .isSoundEnabled(true)
-                .soundResourceUri(sound)
-                .isLedEnabled(true)
-                .ledColor(0xFFFF0000)
-                .ledOnMS(2000)
-                .ledOffMS(1000)
-                .build();
+            .isSwipeToDismissEnabled(false)
+            .contentTitle("CATAPUSH TEST")
+            .iconId(R.drawable.ic_stat_notify)
+            .isVibrationEnabled(true)
+            .vibrationPattern(new long[]{100, 200, 100, 300})
+            .isSoundEnabled(true)
+            .soundResourceUri(sound)
+            .isLedEnabled(true)
+            .ledColor(0xFFFF0000)
+            .ledOnMS(2000)
+            .ledOffMS(1000)
+            .build();
 
         Catapush.getInstance()
-                .setPush(notification)
-                .setLogging(true)
-                .start("test-android", "test-android");
+            .setPush(notification)
+            .setLogging(true)
+            .start("", "");
+    }
+
+    @Override
+    public void set(String title) {
+        setTitle(title);
     }
 }

@@ -1,11 +1,13 @@
 package com.catapush.demo.catapush36integrationtest.app.messages;
 
 import com.catapush.demo.catapush36integrationtest.app.R;
+import com.catapush.demo.catapush36integrationtest.app.TitleChange;
 import com.catapush.library.storage.models.IPMessage;
 import com.catapush.library.ui.CatapushRecyclerViewAdapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +24,8 @@ public class MessageFragment extends Fragment implements MessageView {
 
     private CatapushRecyclerViewAdapter mAdapter;
 
+    private TitleChange titleChanger;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -37,7 +41,9 @@ public class MessageFragment extends Fragment implements MessageView {
         recyclerView.setAdapter(mAdapter);
 
         mPresenter.getMessages();
-
+        if (titleChanger != null) {
+            titleChanger.set(getString(R.string.messages_fragment_title));
+        }
         return rootView;
     }
 
@@ -61,5 +67,9 @@ public class MessageFragment extends Fragment implements MessageView {
     public void onAttach(Context context) {
         super.onAttach(context);
         mPresenter = new MessagePresenter(context, this);
+    }
+
+    public void setTitleChanger(@NonNull TitleChange change) {
+        titleChanger = change;
     }
 }

@@ -4,4 +4,6 @@
     <string name="catapush_app_key"> </string>
     <string name="gcm_sender_id"> </string>
 
+    <string name="messages_fragment_title">Messages</string>
+
 </resources>

@@ -2,9 +2,14 @@
 <resources>
     <color name="message_list_bg">#ffffff</color>
 
+    <color name="primary">#3c96c8</color>
+    <color name="primary_dark">#3c96c8</color>
+    <color name="accent">#3c96c8</color>
+    <color name="textPrimaryColor">#ffffff</color>
+
     <!-- Customizable Catapush color -->
     <color name="catapush_message_list_item_bg">#ffffff</color>
-    <color name="catapush_message_border_color">#2844e1</color>
+    <color name="catapush_message_border_color">#d0c9c9</color>
 
     <color name="catapush_message_title_color">#000000</color>
     <color name="catapush_message_subtitle_color">#999292</color>

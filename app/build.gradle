@@ -10,14 +10,12 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
-    maven {
-        url "https://jitpack.io"
-    }
+    maven { url "https://jitpack.io" }
 }
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.catapush.demo.catapush36integrationtest.app"
