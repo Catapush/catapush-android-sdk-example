@@ -1,4 +1,4 @@
-[![image](https://raw.githubusercontent.com/Catapush/android-example/master/images/logo.png)](http://www.catapush.com/)
+![Catapush Logo](https://github.com/Catapush/catapush-ios-sdk-example/blob/master/catapush_logo.png)
 
 # Catapush Android Example
 
