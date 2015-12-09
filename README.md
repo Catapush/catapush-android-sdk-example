@@ -4,7 +4,7 @@
 
 This project shows how quickly Catapush Android SDK can be integrated into your current app to receive Catapush messages and display them with a customizable bubble layout. Check out the official website: [Catapush - reliable push notification service](http://www.catapush.com).
 
-[![](/images/landing.png?raw=true)]()
+[![](/images/flight_message.png?raw=true)]()
 
 ## Usage
 
