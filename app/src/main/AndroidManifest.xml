@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.catapush.demo.catapush36integrationtest.app">
+          package="com.catapush.example.app">
 
     <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE"/>
@@ -8,7 +8,7 @@
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
-            android:name=".MyApplication"
+            android:name="com.catapush.example.app.MyApplication"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
         <activity
@@ -31,13 +31,10 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.catapush.library.service.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL"/>
-
-        <meta-data android:name="com.catapush.library.APP_KEY" android:value="@string/catapush_app_key"/>
-        <meta-data android:name="com.catapush.library.GCM_SENDER_ID" android:value="@string/gcm_sender_id"/>
+        <service android:name="com.catapush.library.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL"/>
 
         <receiver
-                android:name=".communications.MyReceiver"
+                android:name="com.catapush.example.app.communications.MyReceiver"
                 android:permission="${applicationId}.C2D_MESSAGE">
             <intent-filter>
                 <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>

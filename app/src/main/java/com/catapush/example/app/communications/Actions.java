@@ -1,4 +1,4 @@
-package com.catapush.demo.catapush36integrationtest.app.communications;
+package com.catapush.example.app.communications;
 
 public class Actions {
 
