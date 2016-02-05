@@ -9,13 +9,14 @@ This project shows how quickly Catapush Android SDK can be integrated into your 
 ## Usage
 
 1. Clone this repo;
-2. Place your *Catapush App Key* and your *GCM SenderID* in **/res/values/strings.xml**;
-3. Create a new user with your [Catapush Dashboard](http://www.catapush.com/) and, in `MainActivity`, replace example identifier and password with your proper ones;
+2. Create a new app on [Catapush Dashboard](http://www.catapush.com/)
+3. Place your *Catapush App Key* and *GCM SenderID* in the [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L63)
+3. Create a new user with your [Catapush Dashboard](http://www.catapush.com/) and, in [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L65), replace example identifier and password with your proper ones;
 4. Run the app;
 5. Back to your [Catapush Dashboard](http://www.catapush.com/) and send some important message.
 
 Note:
-Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device.
+Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device or install GApps on your emulator.
 
 ## Advanced
 
@@ -92,7 +93,7 @@ Catapush message bubbles come with rounded corners. You can change them overridi
 If you don't want rounded corners at all, simply set it to `0dp`.
 
 ## Contatcs
-If you need help, you have feedbacks or questions, send us a mail at **info [at] catapush [dot] com**
+If you need help, you have feedbacks or questions, send us a mail at **info [at] catapush [dot] com** or join us on [Gitter](https://gitter.im/Catapush/support).
 
 [![Analytics](https://ga-beacon.appspot.com/UA-60582915-4/android-example/readme)](https://github.com/igrigorik/ga-beacon)
 
