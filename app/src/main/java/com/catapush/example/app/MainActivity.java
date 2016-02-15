@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
 
         Catapush.getInstance()
             .setPush(notification)
-            .setAppKey("")
-            .setGcmSenderId("")
-            .setUser("", "")
+            .setAppKey(getString(R.string.catapush_key))
+            .setGcmSenderId(getString(R.string.catapush_sender_id))
+            .setUser(getString(R.string.catapush_username), getString(R.string.catapush_password))
             .start();
     }
 

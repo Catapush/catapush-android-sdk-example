@@ -5,3 +5,5 @@
 /build
 /.idea/.name
 *.iml
+/app/google-services.json
+/app/src/main/res/values/catapush.xml
