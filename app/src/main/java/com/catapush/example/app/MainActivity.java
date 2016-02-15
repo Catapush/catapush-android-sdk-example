@@ -1,6 +1,6 @@
-package com.catapush.demo.catapush36integrationtest.app;
+package com.catapush.example.app;
 
-import com.catapush.demo.catapush36integrationtest.app.messages.MessageFragment;
+import com.catapush.example.app.messages.MessageFragment;
 import com.catapush.library.Catapush;
 import com.catapush.library.notifications.Notification;
 
@@ -40,19 +40,19 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
     public void onPause() {
         super.onPause();
         // Our app is not visible and we want status bar notification in this scenario
-        Catapush.getInstance().showNotificationPopup(true);
+        Catapush.getInstance().enableNotifications();
     }
 
     public void startCatapush(Uri sound) {
         Notification notification = Notification.builder()
-            .isSwipeToDismissEnabled(false)
-            .contentTitle("CATAPUSH TEST")
-            .iconId(R.drawable.ic_stat_notify)
-            .isVibrationEnabled(true)
+            .swipeToDismissEnabled(false)
+            .title("CATAPUSH TEST")
+            //.iconId(R.drawable.ic_stat_notify)
+            .vibrationEnabled(true)
             .vibrationPattern(new long[]{100, 200, 100, 300})
-            .isSoundEnabled(true)
+            .soundEnabled(true)
             .soundResourceUri(sound)
-            .isLedEnabled(true)
+            .ledEnabled(true)
             .ledColor(0xFFFF0000)
             .ledOnMS(2000)
             .ledOffMS(1000)
@@ -60,8 +60,10 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
 
         Catapush.getInstance()
             .setPush(notification)
-            .setLogging(true)
-            .start("", "");
+            .setAppKey("")
+            .setGcmSenderId("")
+            .setUser("", "")
+            .start();
     }
 
     @Override

@@ -1,9 +1,9 @@
-package com.catapush.demo.catapush36integrationtest.app.messages;
+package com.catapush.example.app.messages;
 
-import com.catapush.demo.catapush36integrationtest.app.R;
-import com.catapush.demo.catapush36integrationtest.app.TitleChange;
-import com.catapush.library.storage.models.IPMessage;
-import com.catapush.library.ui.CatapushRecyclerViewAdapter;
+import com.catapush.example.app.R;
+import com.catapush.example.app.TitleChange;
+import com.catapush.library.CatapushRecyclerViewAdapter;
+import com.catapush.library.messages.IPMessage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -45,11 +45,6 @@ public class MessageFragment extends Fragment implements MessageView {
             titleChanger.set(getString(R.string.messages_fragment_title));
         }
         return rootView;
-    }
-
-    @Override
-    public void addMessage(IPMessage message) {
-        mAdapter.add(message);
     }
 
     @Override

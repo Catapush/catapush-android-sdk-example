@@ -1,4 +1,4 @@
-package com.catapush.demo.catapush36integrationtest.app;
+package com.catapush.example.app;
 
 public interface TitleChange {
 

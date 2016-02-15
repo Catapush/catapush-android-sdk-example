@@ -1,4 +1,4 @@
-package com.catapush.demo.catapush36integrationtest.app;
+package com.catapush.example.app;
 
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.Callback;
@@ -12,7 +12,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Catapush.init(this, new Callback<Boolean>() {
+        Catapush.getInstance().init(this, new Callback<Boolean>() {
             @Override
             public void success(Boolean result) {
                 Log.d("MyApp", "Catapush has been initialized");
