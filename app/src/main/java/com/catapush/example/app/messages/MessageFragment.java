@@ -3,7 +3,7 @@ package com.catapush.example.app.messages;
 import com.catapush.example.app.R;
 import com.catapush.example.app.TitleChange;
 import com.catapush.library.CatapushRecyclerViewAdapter;
-import com.catapush.library.messages.IPMessage;
+import com.catapush.library.messages.CatapushMessage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -37,7 +37,7 @@ public class MessageFragment extends Fragment implements MessageView {
         recyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new CatapushRecyclerViewAdapter();
-        mAdapter.setMessages(new ArrayList<IPMessage>());
+        mAdapter.set(new ArrayList<CatapushMessage>());
         recyclerView.setAdapter(mAdapter);
 
         mPresenter.getMessages();
@@ -48,8 +48,8 @@ public class MessageFragment extends Fragment implements MessageView {
     }
 
     @Override
-    public void setMessages(List<IPMessage> messages) {
-        mAdapter.setMessages(messages);
+    public void setMessages(List<CatapushMessage> messages) {
+        mAdapter.set(messages);
     }
 
     @Override

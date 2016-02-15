@@ -1,10 +1,10 @@
 package com.catapush.example.app.messages;
 
-import com.catapush.library.messages.IPMessage;
+import com.catapush.library.messages.CatapushMessage;
 
 import java.util.List;
 
 public interface MessageView {
 
-    void setMessages(List<IPMessage> messages);
+    void setMessages(List<CatapushMessage> messages);
 }
