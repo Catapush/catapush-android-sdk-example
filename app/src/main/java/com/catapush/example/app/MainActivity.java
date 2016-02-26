@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
     public void onResume() {
         super.onResume();
         // Our app is open and we don't want status bar notification in this scenario
-        Catapush.getInstance().showNotificationPopup(false);
+        Catapush.getInstance().disableNotifications();
     }
 
     @Override

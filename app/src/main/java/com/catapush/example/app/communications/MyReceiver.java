@@ -36,6 +36,11 @@ public class MyReceiver extends CatapushReceiver {
     }
 
     @Override
+    public void onNotificationClicked(CatapushMessage catapushMessage, Context context) {
+        Log.d("MyApp", "Notification clicked: " + catapushMessage);
+    }
+
+    @Override
     public void onRegistrationFailed(CatapushAuthenticationError error, Context context) {
         Log.e("MyApp", "Error Message: " + error.getReason());
     }

@@ -51,7 +51,7 @@ dependencies {
 
     compile('com.google.android.gms:play-services-gcm:8.4.0')
 
-    compile 'com.catapush:catapush-android-sdk:adb2322811'
+    compile 'com.catapush:catapush-android-sdk:42916ded75'
 }
 
 apply plugin: 'com.google.gms.google-services'
