@@ -3,7 +3,7 @@ package com.catapush.example.app.messages;
 import com.catapush.example.app.communications.Actions;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.Callback;
-import com.catapush.library.messages.IPMessage;
+import com.catapush.library.messages.CatapushMessage;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,10 +43,10 @@ public class MessagePresenter {
     }
 
     public void getMessages() {
-        Catapush.getInstance().getAllMessagesAsList(new Callback<List<IPMessage>>() {
+        Catapush.getInstance().getMessagesAsList(new Callback<List<CatapushMessage>>() {
             @Override
-            public void success(List<IPMessage> messages) {
-                mView.setMessages(messages);
+            public void success(List<CatapushMessage> catapushMessages) {
+                mView.setMessages(catapushMessages);
             }
 
             @Override
