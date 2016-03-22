@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="message_list_bg">#ffffff</color>
+  <color name="white">#FFFFFF</color>
 
-    <color name="primary">#3c96c8</color>
-    <color name="primary_dark">#3c96c8</color>
-    <color name="accent">#3c96c8</color>
-    <color name="textPrimaryColor">#ffffff</color>
+  <color name="message_list_bg">@color/white</color>
 
-    <!-- Customizable Catapush color -->
-    <color name="catapush_message_list_item_bg">#ffffff</color>
-    <color name="catapush_message_border_color">#d0c9c9</color>
+  <color name="primary">#50BFF7</color>
+  <color name="primary_dark">#0A6994</color>
+  <color name="accent">@color/primary_dark</color>
 
-    <color name="catapush_message_title_color">#000000</color>
-    <color name="catapush_message_subtitle_color">#999292</color>
-    <color name="catapush_message_datetime_color">#ff9d9d9d</color>
+  <color name="textPrimaryColor">@color/white</color>
+
+  <!-- Customizable Catapush color -->
+  <color name="catapush_message_list_item_bg">#ffffff</color>
+  <color name="catapush_message_border_color">#d0c9c9</color>
+
+  <color name="catapush_received_message_list_item_bg">#a9a6a6</color>
+
+  <color name="catapush_message_datetime_color">@color/white</color>
+  <color name="catapush_message_subtitle_color">@color/white</color>
+  <color name="catapush_message_title_color">@color/white</color>
 
 </resources>
