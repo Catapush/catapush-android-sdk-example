@@ -13,7 +13,7 @@ This project shows how quickly Catapush Android SDK can be integrated into your 
 3. Place your *Catapush App Key* and *GCM SenderID* in the [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L63)
 3. Create a new user with your [Catapush Dashboard](http://www.catapush.com/) and, in [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L65), replace example identifier and password with your proper ones;
 4. Run the app;
-5. Back to your [Catapush Dashboard](http://www.catapush.com/) and send some important message.
+5. Back to your [Catapush Dashboard](http://www.catapush.com/) and send some important messages.
 
 Note:
 Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device or install GApps on your emulator.
