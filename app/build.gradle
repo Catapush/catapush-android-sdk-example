@@ -3,8 +3,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'com.google.gms:google-services:2.0.0-alpha7'
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.google.gms:google-services:2.1.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -16,14 +16,14 @@ repositories {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.catapush.example.app"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 5
-        versionName "5.1.0"
+        versionCode 6
+        versionName "5.2.0"
     }
 
     compileOptions {
@@ -42,7 +42,7 @@ android {
     }
 }
 
-final ANDROID = '23.2.0'
+final ANDROID = '23.3.0'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${ANDROID}"
@@ -51,7 +51,7 @@ dependencies {
 
     compile('com.google.android.gms:play-services-gcm:8.4.0')
 
-    compile 'com.catapush:catapush-android-sdk:5.0.3'
+    compile 'com.catapush:catapush-android-sdk:5.0.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
