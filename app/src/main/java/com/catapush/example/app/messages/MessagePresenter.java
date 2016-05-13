@@ -14,9 +14,9 @@ import java.util.List;
 
 public class MessagePresenter {
 
-    private MessageView mView;
+    private MessageView view;
 
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -30,12 +30,12 @@ public class MessagePresenter {
     };
 
     public MessagePresenter(Context context, MessageView view) {
-        mView = view;
+        this.view = view;
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Actions.ACTION_IPMESSAGE_RECEIVED);
         filter.addCategory(context.getPackageName());
-        context.registerReceiver(mReceiver, filter);
+        context.registerReceiver(receiver, filter);
     }
 
     private void onMessageReceived(Intent intent) {
@@ -46,7 +46,7 @@ public class MessagePresenter {
         Catapush.getInstance().getMessagesAsList(new Callback<List<CatapushMessage>>() {
             @Override
             public void success(List<CatapushMessage> catapushMessages) {
-                mView.setMessages(catapushMessages);
+                view.setMessages(catapushMessages);
             }
 
             @Override
@@ -54,5 +54,9 @@ public class MessagePresenter {
 
             }
         });
+    }
+
+    public BroadcastReceiver getReceiver() {
+        return receiver;
     }
 }

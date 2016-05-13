@@ -20,9 +20,9 @@ import java.util.List;
 
 public class MessageFragment extends Fragment implements MessageView {
 
-    private MessagePresenter mPresenter;
+    private MessagePresenter presenter;
 
-    private CatapushRecyclerViewAdapter mAdapter;
+    private CatapushRecyclerViewAdapter adapter;
 
     private TitleChange titleChanger;
 
@@ -36,11 +36,11 @@ public class MessageFragment extends Fragment implements MessageView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new CatapushRecyclerViewAdapter();
-        mAdapter.set(new ArrayList<CatapushMessage>());
-        recyclerView.setAdapter(mAdapter);
+        adapter = new CatapushRecyclerViewAdapter();
+        adapter.set(new ArrayList<CatapushMessage>());
+        recyclerView.setAdapter(adapter);
 
-        mPresenter.getMessages();
+        presenter.getMessages();
         if (titleChanger != null) {
             titleChanger.set(getString(R.string.messages_fragment_title));
         }
@@ -49,19 +49,19 @@ public class MessageFragment extends Fragment implements MessageView {
 
     @Override
     public void setMessages(List<CatapushMessage> messages) {
-        mAdapter.set(messages);
+        adapter.set(messages);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter = null;
+        getActivity().unregisterReceiver(presenter.getReceiver());
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mPresenter = new MessagePresenter(context, this);
+        presenter = new MessagePresenter(context, this);
     }
 
     public void setTitleChanger(@NonNull TitleChange change) {
