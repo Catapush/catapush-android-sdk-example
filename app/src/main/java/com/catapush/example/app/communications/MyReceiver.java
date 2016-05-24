@@ -1,15 +1,21 @@
 package com.catapush.example.app.communications;
 
 import com.catapush.example.app.MainActivity;
-import com.catapush.library.CatapushReceiver;
+import com.catapush.library.CatapushTwoWayReceiver;
 import com.catapush.library.exceptions.CatapushAuthenticationError;
 import com.catapush.library.messages.CatapushMessage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-public class MyReceiver extends CatapushReceiver {
+public class MyReceiver extends CatapushTwoWayReceiver {
+
+    @Override
+    public void onConnecting(Context context) {
+        Log.d("MyApp", "Connecting...");
+    }
 
     @Override
     public void onConnected(Context context) {
@@ -17,7 +23,7 @@ public class MyReceiver extends CatapushReceiver {
     }
 
     @Override
-    public void onMessageReceived(CatapushMessage catapushMessage, Context context) {
+    public void onMessageReceived(@NonNull CatapushMessage catapushMessage, Context context) {
         Log.d("MyApp", "Received Message: " + catapushMessage);
 
         Intent intent = new Intent(Actions.ACTION_IPMESSAGE_RECEIVED);
@@ -27,7 +33,7 @@ public class MyReceiver extends CatapushReceiver {
     }
 
     @Override
-    public void onMessageOpened(CatapushMessage catapushMessage, Context context) {
+    public void onMessageOpened(@NonNull CatapushMessage catapushMessage, Context context) {
         Log.d("MyApp", "Opened Message: " + catapushMessage);
 
         Intent intent = new Intent(context, MainActivity.class);
@@ -36,22 +42,32 @@ public class MyReceiver extends CatapushReceiver {
     }
 
     @Override
-    public void onNotificationClicked(CatapushMessage catapushMessage, Context context) {
+    public void onMessageSent(@NonNull CatapushMessage catapushMessage, Context context) {
+        Log.d("MyApp", "Message marked as sent");
+    }
+
+    @Override
+    public void onMessageSentConfirmed(@NonNull CatapushMessage catapushMessage, Context context) {
+        Log.d("MyApp", "Message sent and delivered");
+    }
+
+    @Override
+    public void onNotificationClicked(@NonNull CatapushMessage catapushMessage, Context context) {
         Log.d("MyApp", "Notification clicked: " + catapushMessage);
     }
 
     @Override
-    public void onRegistrationFailed(CatapushAuthenticationError error, Context context) {
+    public void onReloginNotificationClicked(Context context) {
+        Log.d("MyApp", "Authentication lost. Need to relogin");
+    }
+
+    @Override
+    public void onRegistrationFailed(@NonNull CatapushAuthenticationError error, Context context) {
         Log.e("MyApp", "Error Message: " + error.getReason());
     }
 
     @Override
     public void onDisconnected(int errorCode, Context context) {
         Log.d("MyApp", "Disconnected: " + errorCode);
-    }
-
-    @Override
-    public void onConnecting(Context context) {
-        Log.d("MyApp", "Connecting...");
     }
 }

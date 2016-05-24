@@ -20,4 +20,6 @@
   <color name="catapush_message_subtitle_color">@color/white</color>
   <color name="catapush_message_title_color">@color/white</color>
 
+  <color name="catapush_sentfield_border_color">@color/primary_dark</color>
+  <color name="catapush_sentfield_bg_color">@color/primary</color>
 </resources>
