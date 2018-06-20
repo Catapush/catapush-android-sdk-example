@@ -9,11 +9,11 @@ This project shows how quickly Catapush Android SDK can be integrated into your 
 ## Usage
 
 1. Clone this repo;
-2. Create a new app on [Catapush Dashboard](http://www.catapush.com/)
-3. Place your *Catapush App Key* and *GCM SenderID* in the [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L63)
-3. Create a new user with your [Catapush Dashboard](http://www.catapush.com/) and, in [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L65), replace example identifier and password with your proper ones;
+2. Create a new app on [Catapush Dashboard](https://www.catapush.com/panel/dashboard)
+3. Place your *Catapush App Key* and *Firebase SenderID* in the [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L63)
+3. Create a new user with your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and, in [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L65), replace example identifier and password with your proper ones;
 4. Run the app;
-5. Back to your [Catapush Dashboard](http://www.catapush.com/) and send some important messages.
+5. Back to your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and send some important messages.
 
 Note:
 Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device or install GApps on your emulator.
@@ -69,7 +69,7 @@ Catapush provides a default text style that you can override to achieve the user
     <item name="android:textSize">@dimen/catapush_message_list_item_datetime_size</item>
     <item name="android:textStyle">italic</item>
     <item name="android:typeface">sans</item>
-</style>        
+</style>
 ```
 
 These styles relay on **colors** and **dimensions**. You can override Catapush default dimensions adding these values to your **res/values/dimens.xml** file:
