@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.catapush.example.app">
 
-  <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-  <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
 
   <application
     android:allowBackup="true"
@@ -11,6 +10,7 @@
     android:name="com.catapush.example.app.MyApplication"
     android:label="@string/app_name"
     android:theme="@style/AppTheme">
+
     <activity
       android:name=".MainActivity"
       android:screenOrientation="userPortrait"
@@ -22,20 +22,20 @@
       </intent-filter>
     </activity>
 
-    <receiver
-      android:name="com.catapush.library.gcm.GcmBroadcastReceiver"
-      android:permission="com.google.android.c2dm.permission.SEND">
+    <service
+        android:name="com.catapush.library.firebase.CatapushFirebaseMessagingService">
       <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-        <category android:name="${applicationId}"/>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
-    </receiver>
+    </service>
 
-    <service android:name="com.catapush.library.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL"/>
+    <service android:name="com.catapush.library.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL" />
+
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
 
     <receiver
-      android:name="com.catapush.example.app.communications.MyReceiver"
-      android:permission="${applicationId}.C2D_MESSAGE">
+        android:name="com.catapush.example.app.communications.MyReceiver"
+        android:permission="${applicationId}.C2D_MESSAGE" >
       <intent-filter>
         <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>
         <action android:name="com.catapush.library.action.MESSAGE_OPENED"/>
@@ -50,6 +50,7 @@
         <category android:name="${applicationId}"/>
       </intent-filter>
     </receiver>
+
   </application>
 
 </manifest>

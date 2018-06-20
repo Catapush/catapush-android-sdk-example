@@ -1,13 +1,15 @@
 package com.catapush.example.app;
 
-import com.catapush.example.app.messages.MessageFragment;
-import com.catapush.library.Catapush;
-import com.catapush.library.notifications.Notification;
-
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+
+import com.catapush.example.app.messages.MessageFragment;
+import com.catapush.library.Catapush;
+import com.catapush.library.notifications.Notification;
 
 public class MainActivity extends AppCompatActivity implements TitleChange {
 
@@ -47,21 +49,24 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
         Notification notification = Notification.builder()
             .swipeToDismissEnabled(false)
             .title("CATAPUSH TEST")
-            //.iconId(R.drawable.ic_stat_notify)
             .vibrationEnabled(true)
             .vibrationPattern(new long[]{100, 200, 100, 300})
             .soundEnabled(true)
             .soundResourceUri(sound)
+            .circleColor(ContextCompat.getColor(getApplicationContext(), R.color.accent))
             .ledEnabled(true)
-            .ledColor(0xFFFF0000)
+            .ledColor(Color.BLUE)
             .ledOnMS(2000)
             .ledOffMS(1000)
             .build();
 
+        /**
+         * Add your configuration in string.xml file
+         */
         Catapush.getInstance()
             .setPush(notification)
             .setAppKey(getString(R.string.catapush_key))
-            .setGcmSenderId(getString(R.string.catapush_sender_id))
+            .setSenderId(getString(R.string.fcm_sender_id))
             .setUser(getString(R.string.catapush_username), getString(R.string.catapush_password))
             .start();
     }

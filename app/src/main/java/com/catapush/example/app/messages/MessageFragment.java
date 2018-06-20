@@ -26,18 +26,30 @@ public class MessageFragment extends Fragment implements MessageView {
 
     private TitleChange titleChanger;
 
+    private CatapushRecyclerViewAdapter.ActionListener mActionListener = new CatapushRecyclerViewAdapter.ActionListener() {
+        @Override
+        public void onImageClick(CatapushMessage message) {
+            //TODO: implement
+        }
+
+        @Override
+        public void onPdfClick(CatapushMessage message) {
+            //TODO: implement
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.messages_recyclerview);
+        RecyclerView recyclerView = rootView.findViewById(R.id.messages_recyclerview);
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CatapushRecyclerViewAdapter();
-        adapter.set(new ArrayList<CatapushMessage>());
+        adapter = new CatapushRecyclerViewAdapter(mActionListener);
+        adapter.set(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         presenter.getMessages();
