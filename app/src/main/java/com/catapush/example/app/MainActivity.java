@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
             .build();
 
         /**
-         * Add your configuration in string.xml file
+         * Add your configuration in strings.xml file
          */
         Catapush.getInstance()
             .setPush(notification)
