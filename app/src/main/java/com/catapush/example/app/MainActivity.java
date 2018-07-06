@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
          */
         Catapush.getInstance()
             .setPush(notification)
-            .setAppKey(getString(R.string.catapush_key))
             .setSenderId(getString(R.string.fcm_sender_id))
             .setUser(getString(R.string.catapush_username), getString(R.string.catapush_password))
             .start();

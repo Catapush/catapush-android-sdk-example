@@ -31,7 +31,13 @@
 
     <service android:name="com.catapush.library.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL" />
 
-    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+    <meta-data
+        android:name="com.catapush.library.APP_KEY"
+        android:value="@string/catapush_key" />
 
     <receiver
         android:name="com.catapush.example.app.communications.MyReceiver"
