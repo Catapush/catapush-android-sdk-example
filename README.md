@@ -10,13 +10,13 @@ This project shows how quickly Catapush Android SDK can be integrated into your 
 
 1. Clone this repo;
 2. Create a new app on [Catapush Dashboard](https://www.catapush.com/panel/dashboard)
-3. Place your *Catapush App Key* and *Firebase SenderID* in the [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L63)
-3. Create a new user with your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and, in [MainActivity](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/java/com/catapush/example/app/MainActivity.java#L65), replace example identifier and password with your proper ones;
-4. Run the app;
-5. Back to your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and send some important messages.
-
-Note:
-Catapush needs Google Play Services. Currently, Google and Genimotion do not provide an Android Emulator with Google Play Services. You should run this app on a real world device or install GApps on your emulator.
+3. Place your *Catapush App Key* in [res/values/strings.xml](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/res/values/strings.xml#L5)
+4. Create a new user with your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and, in [res/values/strings.xml](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/res/values/strings.xml#L6), replace example identifier and password with your proper ones;
+5. Set a custom applicationId (package) in [AndroidManifest.xml](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/src/main/AndroidManifest.xml#L5) and in [app/build.gradle](https://github.com/Catapush/catapush-android-sdk-example/blob/master/app/build.gradle#L13) file;
+6. Create a project on [Firebase Console](https://console.firebase.google.com/) and [register the Android app](https://firebase.google.com/docs/android/setup#register-app) specifying your custom applicationId;
+7. Download the [google-services.json](https://firebase.google.com/docs/android/setup#add-config-file) and place it in the app/ subfolder;
+8. Run the app;
+9. Back to your [Catapush Dashboard](https://www.catapush.com/panel/dashboard) and send some important messages.
 
 ## Advanced
 
@@ -92,8 +92,8 @@ Catapush message bubbles come with rounded corners. You can change them overridi
 
 If you don't want rounded corners at all, simply set it to `0dp`.
 
-## Contatcs
-If you need help, you have feedbacks or questions, send us a mail at **info [at] catapush [dot] com** or join us on [Gitter](https://gitter.im/Catapush/support).
+## Contacts
+If you need help, you have feedback or questions, send us a mail at **info [at] catapush [dot] com** or join us on [Gitter](https://gitter.im/Catapush/support).
 
 [![Analytics](https://ga-beacon.appspot.com/UA-60582915-4/android-example/readme)](https://github.com/igrigorik/ga-beacon)
 
