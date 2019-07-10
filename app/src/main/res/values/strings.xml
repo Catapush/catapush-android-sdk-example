@@ -3,7 +3,7 @@
     <string name="messages_fragment_title">Messages</string>
 
     <string name="catapush_key">"-- Add your Catapush app key --"</string>
-    <string name="fcm_sender_id">"-- Add your FCM Sender Id --"</string>
     <string name="catapush_username">"-- Add your Catapush user Identifier --"</string>
     <string name="catapush_password">"-- Add your Catapush user Password --"</string>
+    <string name="catapush_notification_channel_name">"-- Your localized, user-visible notification channel name --"</string>
 </resources>
