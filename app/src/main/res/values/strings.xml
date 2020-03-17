@@ -2,6 +2,9 @@
     <string name="app_name">Catapush Example</string>
     <string name="messages_fragment_title">Messages</string>
 
+    <string name="undo">Undo</string>
+    <string name="message_delete">"Message \"%1$s\" has been deleted."</string>
+
     <string name="catapush_key">"-- Add your Catapush app key --"</string>
     <string name="catapush_username">"-- Add your Catapush user Identifier --"</string>
     <string name="catapush_password">"-- Add your Catapush user Password --"</string>

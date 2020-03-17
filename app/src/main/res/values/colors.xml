@@ -15,6 +15,7 @@
   <color name="catapush_message_border_color">#d0c9c9</color>
 
   <color name="catapush_received_message_list_item_bg">#a9a6a6</color>
+  <color name="catapush_sent_message_list_item_bg">#a9a6a6</color>
 
   <color name="catapush_message_datetime_color">@color/white</color>
   <color name="catapush_message_subtitle_color">@color/white</color>

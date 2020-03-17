@@ -1,15 +1,14 @@
 package com.catapush.example.app;
 
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.catapush.example.app.messages.MessageFragment;
 import com.catapush.library.Catapush;
-import com.catapush.library.notifications.Notification;
+import com.catapush.library.interfaces.RecoverableErrorCallback;
 
 public class MainActivity extends AppCompatActivity implements TitleChange {
 
@@ -45,29 +44,23 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
     }
 
     public void startCatapush() {
-        final Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-
-        final Notification notification = Notification.builder()
-                .swipeToDismissEnabled(false)
-                .title("CATAPUSH TEST")
-                .vibrationEnabled(true)
-                .vibrationPattern(new long[]{100, 200, 100, 300})
-                .soundEnabled(true)
-                .soundResourceUri(sound)
-                .circleColor(ContextCompat.getColor(getApplicationContext(), R.color.accent))
-                .ledEnabled(true)
-                .ledColor(Color.BLUE)
-                .ledOnMS(2000)
-                .ledOffMS(1000)
-                .build();
-
-        /**
-         * Add your configuration in strings.xml file
-         */
+        // TODO Add your user configuration in strings.xml file
         Catapush.getInstance()
-                .setPush(notification)
                 .setUser(getString(R.string.catapush_username), getString(R.string.catapush_password))
-                .start();
+                .start(new RecoverableErrorCallback<Boolean>() {
+                    @Override
+                    public void success(Boolean aBoolean) {
+                        Log.d(MainActivity.class.getCanonicalName(), "Catapush has been successfully started");
+                    }
+                    @Override
+                    public void warning(@NonNull Throwable throwable) {
+                        Log.d(MainActivity.class.getCanonicalName(), "Catapush warning: " + throwable.getMessage());
+                    }
+                    @Override
+                    public void failure(@NonNull Throwable throwable) {
+                        Log.d(MainActivity.class.getCanonicalName(), "Catapush can't be started: " + throwable.getMessage());
+                    }
+                });
     }
 
     @Override
