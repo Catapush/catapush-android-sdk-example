@@ -1,0 +1,103 @@
+![Catapush Logo](https://github.com/Catapush/catapush-ios-sdk-example/blob/master/catapush_logo.png)
+
+# Catapush Android SDK Changelog
+
+## Catapush 10.x
+
+Catapush 10.x targets Android 10.0 (API 29).
+
+#### 10.0.1
+
+- The `CatapushMessageTouchHelper` class `deleteCallback` parameter now returns the removed item instance instead of its position
+
+#### 10.0.0
+
+- Updated Android target SDK level to 29
+- Added support to the new `channel` field, you can now group messages by channels (conversations); see [Catapush API docs](https://www.catapush.com/docs-api?php#2.1-post---send-a-new-message) for details
+- The `Notification` class has been renamed to `NotificationTemplate`
+- The `Catapush.setPush(…)` method has been renamed to `Catapush.setNotificationTemplate(…)`
+- The `Catapush.clean()` method now requires a `Callback<Boolean>` as parameter to deliver its result
+- The new `Catapush.clearMessages(…)` lets you delete all the stored messages without clearing the SDK configuration and user credentials
+- Added new methods to query the stored messages database:
+  - `Catapush.getMessagesAsList(…)`
+  - `Catapush.getMessagesWithoutChannelAsList(…)`
+  - `Catapush.getMessagesFromChannelAsList(…)`
+- Using the Android Jetpack Paging Library new methods have been added to access the sored messaged database ad `DataSource`:
+  - `Catapush.getMessagesAsDataSourceFactory(…)`
+  - `Catapush.getMessagesWithoutChannelAsDataSourceFactory(…)`
+  - `Catapush.getMessagesFromChannelAsDataSourceFactory(…)`
+- It's now possible to count the unread messages, see:
+  - `Catapush.countUnreadMessages(…)`
+  - `Catapush.countUnreadMessagesWithoutChannel(…)`
+  - `Catapush.countUnreadMessagesFromChannel(…)`
+- Improved status bar notification title handling: the title will be the received message `subject` if present, else the notification template `title`; if none available, it will fallback to the default string `There is a new message`
+- The packages structure of the Catapush UI components has been reworked, if you were using them you will need to fix their import statements
+- The `CatapushRecyclerViewAdapter` class has been renamed to `CatapushMessagesAdapter`
+- Add support for channels to Catapush UI components, see `CatapushConversationsAdapter`
+- Improved the layouts of the Catapush UI components
+
+## Catapush 9.x
+
+Catapush 9.x targets Android 9.0 (API 28).
+The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
+
+#### 9.0.12
+
+- Add workaround to avoid `PendingIntent`s extras `Bundle` recycling; this is to ensure that, when the user touches a status bar notification, the correct message gets relayed to the app
+
+#### 9.0.11
+
+- New server-side sessions debugging feature
+
+#### 9.0.10
+
+- For testing purposes, it's possible to override the Catapush App Key using the deprecated `Catapush.setAppKey(…)` method
+- Do not start Catapush on device boot if user credentials haven't been set
+
+#### 9.0.9
+
+- Connectivity checks have been improved to also work in China
+- `CatapushTwoWayReceiver.onReloginNotificationClicked(…)` is now deprecated and ineffective
+
+#### 9.0.8
+
+- Improved implementation of some API requests
+
+#### 9.0.7
+
+- Added support to the new `replyTo` field, you can now set the ID of the message you're replying to
+- Improved the layouts of the Catapush UI components
+
+#### 9.0.6
+
+- It's now possible to implement a custom FirebaseMessagingService and relay Catapush FCM wakeup notifications to the Catapush SDK using the new `Catapush.handleFcmWakeup(…)` and `Catapush.handleFcmNewToken(…)` methods
+
+#### 9.0.5
+
+- Improve internal NTP implementation to use more NTP pools
+
+#### 9.0.4
+
+- Bug fixes on internal NTP implementation
+
+#### 9.0.3
+
+- Stability improvements to the Catapush UI components
+- The `MessagingService` foreground service notification (`Checking for new messages…`) importance is now correctly set to the lowest value: `NotificationManager.IMPORTANCE_LOW` instead of  `NotificationManager.IMPORTANCE_MIN`
+
+#### 9.0.2
+
+- The Catapush Android SDK won't create the local `NotificationChannel` on your behalf, from now on you must provide the ID of an already-created `NotificationChannel`; the `Catapush.init(…)` method has been updated accordingly removing the `channelName` parameter
+
+#### 9.0.1
+
+- Improve internal database model
+
+#### 9.0.0
+
+- Updated Android min SDK level to 16 and target SDK level to 28
+- Migrated from the deprecated Android Support Library to its new replacement: Android Jetpack (AndroidX)
+- Added support to the new `optionalData` field, see [Catapush API docs](https://www.catapush.com/docs-api?php#2.1-post---send-a-new-message) for details
+- The Catapush UI components now use [Glide](https://github.com/bumptech/glide) to load messages image attachments
+- The `Catapush.start(…)` method now takes a new `RecoverableErrorCallback` that has the new `warning` method to notify about device configuration issues
+- It's now possible to specify a bigger (48x48dp) icon to be used in modal notifications: see `Notification.Builder.modalIconId(@DrawableRes int)`
