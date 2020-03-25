@@ -6,6 +6,15 @@
 
 Catapush 10.x targets Android 10.0 (API 29).
 
+#### 10.0.2
+
+- `CatapushMessageTouchHelper` now takes as input a `SwipeBehavior` parameter so you can delete or reply to messages by swiping on them using respectively `RemoveOnSwipeBehavior` or `ReplyOnSwipeBehavior`. This replaces the previous `Callback<CatapushMessage>` parameter, but you can now set the same callback directly to `RemoveOnSwipeBehavior` or `ReplyOnSwipeBehavior`.
+- The new `CatapushMessagesAdapter.reply(…)` methods lets you reply to a message in a given position. Please note: this will only work if you instantiate `CatapushMessagesAdapter` with a non-null `SendFieldViewProvider`
+- The `CatapushMessagesAdapter.ActionListener` interface has been improved to give more information about its events
+  - `onPdfClick` and `onImageClick` callbacks have now 3 parameters: the tapped `View`, the `CatapushMessage` and its position in the adapter
+  - The new `onMessageLongClick` callback notifies you when a message gets long-clicked, it has 3 parameters like `onPdfClick` and `onImageClick`
+- The new `CatapushMessageContextualMenuHelper` is a ready-to use utility to show a contextual menu on a `CatapushMessage` `View`, it is intended to be used with the new `ActionListener.onMessageLongClick` callback to quickly show reply, copy and delete actions
+
 #### 10.0.1
 
 - The `CatapushMessageTouchHelper` class `deleteCallback` parameter now returns the removed item instance instead of its position
