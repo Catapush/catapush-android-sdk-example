@@ -50,6 +50,10 @@ Catapush 10.x targets Android 10.0 (API 29).
 Catapush 9.x targets Android 9.0 (API 28).
 The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
 
+#### 9.0.13
+
+- Add a workaround to avoid error `4043 Stored user is invalid`
+
 #### 9.0.12
 
 - Add workaround to avoid `PendingIntent`s extras `Bundle` recycling; this is to ensure that, when the user touches a status bar notification, the correct message gets relayed to the app
