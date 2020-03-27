@@ -6,6 +6,11 @@
 
 Catapush 10.x targets Android 10.0 (API 29).
 
+#### 10.0.3
+
+- Revised authentication protocol to improve performances
+- Catapush UI components: improved SendFieldView reply layout
+
 #### 10.0.2
 
 - `CatapushMessageTouchHelper` now takes as input a `SwipeBehavior` parameter so you can delete or reply to messages by swiping on them using respectively `RemoveOnSwipeBehavior` or `ReplyOnSwipeBehavior`. This replaces the previous `Callback<CatapushMessage>` parameter, but you can now set the same callback directly to `RemoveOnSwipeBehavior` or `ReplyOnSwipeBehavior`.
