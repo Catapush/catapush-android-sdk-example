@@ -55,7 +55,14 @@ Catapush 10.x targets Android 10.0 (API 29).
 Catapush 9.x targets Android 9.0 (API 28).
 The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
 
+#### 9.0.14
+
+- Revised authentication protocol to improve performances
+- Resolved a packaging error introduced in version 9.0.13
+
 #### 9.0.13
+
+NOTE: This release was withdrawn because of packaging issues
 
 - Add a workaround to avoid error `4043 Stored user is invalid`
 
