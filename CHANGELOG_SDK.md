@@ -36,7 +36,7 @@ Catapush 10.x targets Android 10.0 (API 29).
   - `Catapush.getMessagesAsList(…)`
   - `Catapush.getMessagesWithoutChannelAsList(…)`
   - `Catapush.getMessagesFromChannelAsList(…)`
-- Using the Android Jetpack Paging Library new methods have been added to access the sored messaged database ad `DataSource`:
+- Using the Android Jetpack Paging Library new methods have been added to access the stored messaged database ad `DataSource`:
   - `Catapush.getMessagesAsDataSourceFactory(…)`
   - `Catapush.getMessagesWithoutChannelAsDataSourceFactory(…)`
   - `Catapush.getMessagesFromChannelAsDataSourceFactory(…)`
