@@ -55,6 +55,10 @@ Catapush 10.x targets Android 10.0 (API 29).
 Catapush 9.x targets Android 9.0 (API 28).
 The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
 
+#### 9.0.16
+
+- Solved an issue with older devices and unsupported cryptographic algorithms
+
 #### 9.0.15
 
 - Solved a cache inconsistency that prevented user switching for some use cases
