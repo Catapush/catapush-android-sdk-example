@@ -6,6 +6,15 @@
 
 Catapush 10.x targets Android 10.0 (API 29).
 
+#### 10.0.4
+
+- Improved errors handling and reporting see the [official documentation](https://www.catapush.com/docs-android-2) for details
+  - `GenericLibraryException` has been replaced by `LibraryConfigurationException` and `SystemConfigurationException`
+  - `ConnectionErrorCodes` has been removed, its error codes has been moved to `CatapushAuthenticationError` and `CatapushConnectionError`
+- Improved support for image attachments previews, see `CatapushMessage.file().thumbnailUri()` field
+  - These thumbnails are securely stored in a subfolder of your app private directory
+  - You can display the thumbnail while downloading the high-resolution version of the attachment from `CatapushMessage.file().remoteUri()`
+
 #### 10.0.3
 
 - Revised authentication protocol to improve performances
@@ -54,6 +63,12 @@ Catapush 10.x targets Android 10.0 (API 29).
 
 Catapush 9.x targets Android 9.0 (API 28).
 The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
+
+#### 9.0.17
+
+- Improved errors handling and reporting see the [official documentation](https://www.catapush.com/docs-android-2) for details
+  - `GenericLibraryException` has been replaced by `LibraryConfigurationException` and `SystemConfigurationException`
+  - `ConnectionErrorCodes` has been removed, its error codes has been moved to `CatapushAuthenticationError` and `CatapushConnectionError`
 
 #### 9.0.16
 
