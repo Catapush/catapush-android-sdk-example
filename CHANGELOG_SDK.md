@@ -6,6 +6,12 @@
 
 Catapush 10.x targets Android 10.0 (API 29).
 
+#### 10.0.5
+
+- Enable and force TLS v1.2 on Android 4.1-4.4 devices
+- Fix a crash when processing an updated FCM push token in the background
+- Catapush UI components: don't crash when removing an item at an invalid position in CatapushMessagesAdapter
+
 #### 10.0.4
 
 - Improved errors handling and reporting see the [official documentation](https://www.catapush.com/docs-android-2) for details
