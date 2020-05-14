@@ -6,6 +6,12 @@
 
 Catapush 10.x targets Android 10.0 (API 29).
 
+#### 10.0.6
+
+- New feature: use `NotificationTemplate.useAttachmentPreviewAsLargeIcon()` to use image attachments thumbnails as large icons for status bar notifications
+- Catapush UI components: add support for GIF attachments
+- Catapush UI components: improve image message layout measuring to avoid scrolling issues
+
 #### 10.0.5
 
 - Enable and force TLS v1.2 on Android 4.1-4.4 devices
