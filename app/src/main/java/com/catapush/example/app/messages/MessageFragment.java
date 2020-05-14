@@ -41,12 +41,22 @@ public class MessageFragment
 
     private CatapushMessagesAdapter.ActionListener actionListener = new CatapushMessagesAdapter.ActionListener() {
         @Override
-        public void onImageClick(@NonNull CatapushMessage message) {
+        public void onMessageLongClick(@NonNull View view, @NonNull CatapushMessage message, int position) {
             //TODO: implement
         }
 
         @Override
-        public void onPdfClick(@NonNull CatapushMessage message) {
+        public void onImageClick(@NonNull View view, @NonNull CatapushMessage message, int position) {
+            //TODO: implement
+        }
+
+        @Override
+        public void onPdfClick(@NonNull View view, @NonNull CatapushMessage message, int position) {
+            //TODO: implement
+        }
+
+        @Override
+        public void onTxtClick(@NonNull View view, @NonNull CatapushMessage message, int position) {
             //TODO: implement
         }
     };
@@ -108,7 +118,10 @@ public class MessageFragment
         recyclerView.setLayoutManager(new CatapushMessagesLayoutManager(getContext()));
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
-        CatapushMessageTouchHelper.attachToRecyclerView(recyclerView, deleteMessageCallback);
+        // See also CatapushMessageTouchHelper.ReplyOnSwipeBehavior
+        CatapushMessageTouchHelper.RemoveOnSwipeBehavior deleteBehavior
+                = new CatapushMessageTouchHelper.RemoveOnSwipeBehavior(adapter, deleteMessageCallback);
+        CatapushMessageTouchHelper.attachToRecyclerView(recyclerView, deleteBehavior);
 
         if (titleChanger != null) {
             titleChanger.set(getString(R.string.messages_fragment_title));

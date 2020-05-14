@@ -44,7 +44,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
     // Catapush SDK
-    implementation ('com.catapush:catapush-android-sdk:10.0.1') {
+    implementation ('com.github.Catapush:catapush-android-sdk:10.0.6') {
         changing = true
     }
 }
