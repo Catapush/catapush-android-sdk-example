@@ -76,6 +76,10 @@ Catapush 10.0.x targets Android 10.0 (API 29) and requires Android 4.1 (API 16).
 Catapush 9.1.x targets Android 9.0 (API 28) and requires Android 4.3 (API 18).
 The SDK now supports advanced security features provided by Android KeyStore.
 
+#### 9.1.1
+
+- Improve encryption/decryption on Android 6.0+ (API 23) devices.
+
 #### 9.1.0
 
 - Minimum SDK level raised to 18.
