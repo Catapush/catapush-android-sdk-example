@@ -2,9 +2,29 @@
 
 # Catapush Android SDK Changelog
 
+## Catapush 10.1.x
+
+Catapush 10.1.x targets Android 10.0 (API 29) and requires Android 4.1 (API 18).
+
+#### 10.1.0
+
+- Minimum SDK level raised to 18.
+- The cryptographic key used to encrypt user credentials are now stored into Android KeyStore.
+- You can listen for the secure credentials store initialization status providing a callback through `Catapush.setSecureCredentialsStoreCallback(…)`, please use this method before invoking `Catapush.init(…)`
+  - `Callback.success(…)` will be invoked as soon as the secure credentials store is initialized successfully.
+  - `Callback.failure(…)` is invoked when an exception is raised while configuring the secure credentials store.
+- New feature: received message transformation. You can now manipulate the body of the messages received through Catapush before they get persisted inside the local database. See `Catapush.setMessageTransformation(…)`, please use this method before invoking `Catapush.init(…)`
+  - The body property will be used to display the full content of the message to the user i.e. Android notifications multiline layout, see `Notification.BigTextStyle` class.
+  - The previewText property will be used to display a short preview of the message to the user i.e. Android notifications single line layout, see `Notification.Builder(…).setContentText(…)`.
+
 ## Catapush 10.0.x
 
 Catapush 10.0.x targets Android 10.0 (API 29) and requires Android 4.1 (API 16).
+
+⚠️ Please note:
+
+If your app is using Catapush 9.1.x the only upgrade path supported is to Catapush 10.1.x.
+Do not update active installations to Catapush 10.0.x if you're using Catapush 9.1.x.
 
 #### 10.0.6
 
