@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.catapush.example.app"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 6
         versionName "5.3.0"
@@ -44,7 +44,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
     // Catapush SDK
-    implementation ('com.github.Catapush:catapush-android-sdk:10.0.6') {
+    implementation ('com.github.Catapush:catapush-android-sdk:10.1.0') {
         changing = true
     }
 }
