@@ -14,6 +14,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.Callback;
+import com.catapush.library.messages.CatapushMessageTransformation;
 import com.catapush.library.notifications.NotificationTemplate;
 
 import java.io.IOException;
@@ -61,8 +62,36 @@ public class MyApplication extends MultiDexApplication {
             }
         }
 
-        // Required Catapush instance initialization, must be done in Application.onCreate()
-        Catapush.getInstance().init(this, NOTIFICATION_CHANNEL_ID,
+        Catapush.getInstance()
+                // OPTIONAL received message transformation callback
+                .setMessageTransformation(new CatapushMessageTransformation() {
+                    @NonNull
+                    @Override
+                    public Model transform(@NonNull Model input) {
+                        // This callback gives you the possibility to transform the message body and
+                        // preview before storing it in the local Catapush messages DB
+                        //input.body = "The transformed message," +
+                        //        " unencrypted or with variables replaced";
+                        //input.previewText = "The transformed message.";
+                        return input;
+                    }
+                })
+                // OPTIONAL secure store initialization callback
+                .setSecureCredentialsStoreCallback(new Callback<Boolean>() {
+                    @Override
+                    public void success(Boolean aBoolean) {
+                        // Secure credentials storage has been successfully initialized.
+                        // Catapush will store the user password safely inside the Android KeyStore.
+                    }
+                    @Override
+                    public void failure(@NonNull Throwable throwable) {
+                        // Secure credentials storage is not available.
+                        // You might want to not start the messaging service on a non-secure device
+                        // and clear the Catapush instance.
+                    }
+                })
+                // REQUIRED Catapush instance initialization, must be done in Application.onCreate()
+                .init(this, NOTIFICATION_CHANNEL_ID,
                 new Callback<Boolean>() {
                     @Override
                     public void success(Boolean response) {
