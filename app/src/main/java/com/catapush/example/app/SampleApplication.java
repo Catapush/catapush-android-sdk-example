@@ -22,7 +22,7 @@ import java.io.IOException;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 
-public class MyApplication extends MultiDexApplication {
+public class SampleApplication extends MultiDexApplication {
 
     // Constant sting ID for your notification channel.
     // The value may be truncated if it's too long.
@@ -92,38 +92,38 @@ public class MyApplication extends MultiDexApplication {
                 })
                 // REQUIRED Catapush instance initialization, must be done in Application.onCreate()
                 .init(this, NOTIFICATION_CHANNEL_ID,
-                new Callback<Boolean>() {
-                    @Override
-                    public void success(Boolean response) {
-                        Log.d(MyApplication.class.getCanonicalName(), "Catapush has been successfully initialized");
+                        new Callback<Boolean>() {
+                            @Override
+                            public void success(Boolean response) {
+                                Log.d(SampleApplication.class.getCanonicalName(), "Catapush has been successfully initialized");
 
-                        // This is the notification template that the Catapush SDK uses to build
-                        // the status bar notification shown to the user.
-                        // Some settings like vibration, lights, etc. are duplicated here since
-                        // before Android introduced notification channels (Android < 8.0) the
-                        // styling was made on a per-notification basis.
-                        final NotificationTemplate template = NotificationTemplate.builder()
-                                .swipeToDismissEnabled(false)
-                                .title("Your notification title!")
-                                .vibrationEnabled(true)
-                                .vibrationPattern(new long[]{100, 200, 100, 300})
-                                .soundEnabled(true)
-                                .soundResourceUri(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-                                .circleColor(ContextCompat.getColor(MyApplication.this, R.color.primary))
-                                .ledEnabled(true)
-                                .ledColor(Color.BLUE)
-                                .ledOnMS(2000)
-                                .ledOffMS(1000)
-                                .build();
+                                // This is the notification template that the Catapush SDK uses to build
+                                // the status bar notification shown to the user.
+                                // Some settings like vibration, lights, etc. are duplicated here since
+                                // before Android introduced notification channels (Android < 8.0) the
+                                // styling was made on a per-notification basis.
+                                final NotificationTemplate template = NotificationTemplate.builder()
+                                        .swipeToDismissEnabled(false)
+                                        .title("Your notification title!")
+                                        .vibrationEnabled(true)
+                                        .vibrationPattern(new long[]{100, 200, 100, 300})
+                                        .soundEnabled(true)
+                                        .soundResourceUri(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+                                        .circleColor(ContextCompat.getColor(SampleApplication.this, R.color.primary))
+                                        .ledEnabled(true)
+                                        .ledColor(Color.BLUE)
+                                        .ledOnMS(2000)
+                                        .ledOffMS(1000)
+                                        .build();
 
-                        Catapush.getInstance().setNotificationTemplate(template);
-                    }
+                                Catapush.getInstance().setNotificationTemplate(template);
+                            }
 
-                    @Override
-                    public void failure(@NonNull Throwable t) {
-                        Log.d(MyApplication.class.getCanonicalName(), "Catapush initialization error: " + t.getMessage());
-                    }
-                });
+                            @Override
+                            public void failure(@NonNull Throwable t) {
+                                Log.d(SampleApplication.class.getCanonicalName(), "Catapush initialization error: " + t.getMessage());
+                            }
+                        });
     }
 
     // See https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#error-handling
@@ -154,7 +154,7 @@ public class MyApplication extends MultiDexApplication {
                 return;
             }
             // Log this to your analytics platform
-            Log.e(MyApplication.class.getCanonicalName(), e.getMessage());
+            Log.e(SampleApplication.class.getCanonicalName(), e.getMessage());
         });
     }
 }

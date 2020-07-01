@@ -6,11 +6,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.catapush.example.app.managers.SampleCatapushStateManager;
 import com.catapush.example.app.messages.MessageFragment;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.RecoverableErrorCallback;
 
-public class MainActivity extends AppCompatActivity implements TitleChange {
+public class MainActivity
+        extends AppCompatActivity
+        implements TitleChange, SampleCatapushStateManager.CatapushStarter {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +27,7 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
                     .commit();
         }
 
-        if (!Catapush.getInstance().isRunning()) {
-            startCatapush();
-        }
+        SampleCatapushStateManager.INSTANCE.init(this);
     }
 
     @Override
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements TitleChange {
         super.onPause();
         // Our app is not visible and we want status bar notification in this scenario
         Catapush.getInstance().resumeNotifications();
+    }
+
+    @Override
+    protected void onDestroy() {
+        SampleCatapushStateManager.INSTANCE.dispose();
+        super.onDestroy();
     }
 
     public void startCatapush() {
