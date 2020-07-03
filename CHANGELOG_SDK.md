@@ -96,6 +96,10 @@ Do not update active installations to Catapush 10.0.x if you're using Catapush 9
 Catapush 9.1.x targets Android 9.0 (API 28) and requires Android 4.3 (API 18).
 The SDK now supports advanced security features provided by Android KeyStore.
 
+#### 9.1.2
+
+- Minor fix to avoid persistence of the "checking for new messages" notification in the status bar.
+
 #### 9.1.1
 
 - Improve encryption/decryption on Android 6.0+ (API 23) devices.
