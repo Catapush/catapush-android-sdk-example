@@ -2,6 +2,35 @@
 
 # Catapush Android SDK Changelog
 
+## Catapush 10.2.x
+
+Catapush 10.2.x targets Android 10.0 (API 29) and requires Android 4.1 (API 18).
+
+The SDK has now been split in different artifacts to reduce its size and optimize your project build times.  
+This rework will give us the ability to add new new feature modules in the near future!
+
+The available modules are:
+- `core` the main Catapush SDK implementation
+- `gms` the integration of Catapush SDK with Google Mobile Services / Firebase Cloud Messaging
+- `ui` the Catapush UI Components
+
+Replace your Catapush SDK dependency declaration in your app `build.gradle` file to include the `gms` module:
+```
+implementation('com.catapush.catapush-android-sdk:gms:10.2.0')
+```
+The `core` module will be automatically added as a transitive dependency.
+
+If you also need the Catapush UI Components add the `ui` module as a dependency with this line:
+```
+implementation('com.catapush.catapush-android-sdk:ui:10.2.0')
+```
+
+#### 10.2.0-beta1
+
+- The `Catapush.init(…)` method has been updated and requires an additional `List<ICatapushMobileServicesAdapter>` implementations.
+  i.e. if you are using GMS/FCM: `Catapush.getInstance().init(context, channelId, Collections.singletonList(CatapushGms.INSTANCE), …`
+- Minor improvements on secure credentials storage initialization
+
 ## Catapush 10.1.x
 
 Catapush 10.1.x targets Android 10.0 (API 29) and requires Android 4.1 (API 18).
@@ -23,7 +52,7 @@ Catapush 10.0.x targets Android 10.0 (API 29) and requires Android 4.1 (API 16).
 
 ⚠️ Please note:
 
-If your app is using Catapush 9.1.x the only upgrade path supported is to Catapush 10.1.x.
+If your app is using Catapush 9.1.x the only upgrade path supported is to Catapush 10.1.x or higher.
 Do not update active installations to Catapush 10.0.x if you're using Catapush 9.1.x.
 
 #### 10.0.6
