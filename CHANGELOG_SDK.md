@@ -25,6 +25,15 @@ If you also need the Catapush UI Components add the `ui` module as a dependency 
 implementation('com.catapush.catapush-android-sdk:ui:10.2.0')
 ```
 
+In your app `AndroidManifest.xml` file update the `CatapushFirebaseMessagingService` package from:
+```
+android:name="com.catapush.library.firebase.CatapushFirebaseMessagingService"
+```
+To:
+```
+android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
+```
+
 #### 10.2.0-beta1
 
 - The `Catapush.init(…)` method has been updated and requires an additional `List<ICatapushMobileServicesAdapter>` implementations.
