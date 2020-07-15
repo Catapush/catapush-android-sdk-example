@@ -34,9 +34,9 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
-#### 10.2.0-beta1
+#### 10.2.0
 
-- The `Catapush.init(…)` method has been updated and requires an additional `List<ICatapushMobileServicesAdapter>` implementations.
+- The `Catapush.init(…)` method has been updated and requires an additional `List<ICatapushMobileServicesAdapter>` parameter.
   i.e. if you are using GMS/FCM: `Catapush.getInstance().init(context, channelId, Collections.singletonList(CatapushGms.INSTANCE), …`
 - Minor improvements on secure credentials storage initialization
 
