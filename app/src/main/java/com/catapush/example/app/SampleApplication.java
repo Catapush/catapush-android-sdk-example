@@ -13,11 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDexApplication;
 
 import com.catapush.library.Catapush;
+import com.catapush.library.gms.CatapushGms;
 import com.catapush.library.interfaces.Callback;
 import com.catapush.library.messages.CatapushMessageTransformation;
 import com.catapush.library.notifications.NotificationTemplate;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -91,7 +93,9 @@ public class SampleApplication extends MultiDexApplication {
                     }
                 })
                 // REQUIRED Catapush instance initialization, must be done in Application.onCreate()
-                .init(this, NOTIFICATION_CHANNEL_ID,
+                .init(this,
+                        NOTIFICATION_CHANNEL_ID,
+                        Collections.singletonList(CatapushGms.INSTANCE),
                         new Callback<Boolean>() {
                             @Override
                             public void success(Boolean response) {

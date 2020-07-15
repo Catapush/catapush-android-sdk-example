@@ -31,7 +31,7 @@
         </activity>
 
         <service
-            android:name="com.catapush.library.firebase.CatapushFirebaseMessagingService"
+            android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
             android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
