@@ -34,6 +34,10 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.1
+
+- Minor improvements on secure credentials storage initialization
+
 #### 10.2.0
 
 - The `Catapush.init(…)` method has been updated and requires an additional `List<ICatapushMobileServicesAdapter>` parameter.
