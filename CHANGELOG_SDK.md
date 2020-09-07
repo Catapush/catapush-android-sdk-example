@@ -34,6 +34,11 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.2
+
+- Fix: the "checking for new messages" notification wouldn't automatically get canceled on some older phones
+- Minor improvements on secure credentials storage initialization
+
 #### 10.2.1
 
 - Minor improvements on secure credentials storage initialization
