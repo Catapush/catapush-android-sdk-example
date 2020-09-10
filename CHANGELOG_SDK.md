@@ -34,6 +34,10 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.3
+
+- Improve DNS resolution strategy
+
 #### 10.2.2
 
 - Fix: the "checking for new messages" notification wouldn't automatically get canceled on some older phones
