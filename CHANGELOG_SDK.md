@@ -34,6 +34,11 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.4
+
+- Add a new method Catapush.getInstance().rebuildSecureCredentialsStore(…) that clean secure store contents, delete cryptographic keys, recreate them and rebuild the secure store.
+  Might be helpful when the Android KeyStore refuses to load or use the current keys.
+
 #### 10.2.3
 
 - Improve DNS resolution strategy
