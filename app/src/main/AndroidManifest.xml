@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.catapush.example.app">
 
+    <!-- This permission is needed so that your CatapushReceiver implementation will only be able
+         to receive broadcasts from packages signed with the same key of your app -->
     <permission
         android:name="${applicationId}.CATAPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -20,6 +22,52 @@
         android:fullBackupContent="false"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- This is the app key from your Catapush App dashboard -->
+        <meta-data
+            android:name="com.catapush.library.APP_KEY"
+            android:value="@string/catapush_key" />
+
+        <!-- This is the service that integrates Catapush with Google services
+             This declaration is needed by com.catapush.catapush-android-sdk:gms module -->
+        <service
+            android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- The actual Catapush messaging service, to pick a meaningful label see here:
+             https://developer.android.com/guide/topics/manifest/service-element#label -->
+        <service
+            android:name="com.catapush.library.MessagingService"
+            android:label="@string/service_name"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- This your implementation of CatapushReceiver that receives events from the Catapush
+             MessagingService, note that you have to use the same permission declared above -->
+        <receiver
+            android:name="com.catapush.example.app.communications.SampleReceiver"
+            android:permission="${applicationId}.CATAPUSH_MESSAGE">
+            <intent-filter>
+                <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>
+                <action android:name="com.catapush.library.action.NETWORK_ERROR"/>
+                <action android:name="com.catapush.library.action.CONNECTED"/>
+                <action android:name="com.catapush.library.action.DISCONNECTED"/>
+                <action android:name="com.catapush.library.action.CONNECTING"/>
+                <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>
+                <action android:name="com.catapush.library.action.MESSAGE_OPENED"/>
+                <action android:name="com.catapush.library.action.MESSAGE_SENT"/>
+                <action android:name="com.catapush.library.action.MESSAGE_SENT_CONFIRMED"/>
+                <action android:name="com.catapush.library.action.NOTIFICATION_CLICKED" />
+                <category android:name="${applicationId}"/>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorPortrait"
@@ -29,44 +77,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <service
-            android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name="com.catapush.library.MessagingService" android:label="YOUR_MESSAGE_CENTER_LABEL" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <meta-data
-            android:name="com.catapush.library.APP_KEY"
-            android:value="@string/catapush_key" />
-
-        <receiver
-            android:name="com.catapush.example.app.communications.SampleReceiver"
-            android:permission="${applicationId}.CATAPUSH_MESSAGE">
-            <intent-filter>
-                <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>
-                <action android:name="com.catapush.library.action.MESSAGE_OPENED"/>
-                <action android:name="com.catapush.library.action.MESSAGE_SENT"/>
-                <action android:name="com.catapush.library.action.MESSAGE_SENT_CONFIRMED"/>
-                <action android:name="com.catapush.library.action.NOTIFICATION_CLICKED"/>
-                <action android:name="com.catapush.library.action.RELOGIN_NOTIFICATION_CLICKED"/>
-                <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>
-                <action android:name="com.catapush.library.action.CONNECTING"/>
-                <action android:name="com.catapush.library.action.CONNECTED"/>
-                <action android:name="com.catapush.library.action.NETWORK_ERROR" />
-                <action android:name="com.catapush.library.action.DISCONNECTED"/>
-                <category android:name="${applicationId}"/>
-            </intent-filter>
-        </receiver>
-
 
     </application>
 
