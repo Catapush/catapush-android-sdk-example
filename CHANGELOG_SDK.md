@@ -34,6 +34,13 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.5
+
+- The SDK will now connect to Catapush even if no push services providers are available and working on the device.
+  This will allow foreground messaging on devices running Android 8.0+ and also background messaging on previous Android versions.
+- If the SDK is started with new user credentials while already running it will automatically stop and disconnect the previous user before connecting the new one.
+- Fixed a crash on devices without GMS when including the `com.catapush.catapush-android-sdk:gms` module
+
 #### 10.2.4
 
 - Add a new method Catapush.getInstance().rebuildSecureCredentialsStore(…) that clean secure store contents, delete cryptographic keys, recreate them and rebuild the secure store.
