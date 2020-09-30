@@ -15,7 +15,6 @@ import androidx.multidex.MultiDexApplication;
 import com.catapush.library.Catapush;
 import com.catapush.library.gms.CatapushGms;
 import com.catapush.library.interfaces.Callback;
-import com.catapush.library.messages.CatapushMessageTransformation;
 import com.catapush.library.notifications.NotificationTemplate;
 
 import java.io.IOException;
@@ -41,58 +40,31 @@ public class SampleApplication extends MultiDexApplication {
         // to notify the incoming messages since Android 8.0. It is important that the channel
         // is created before starting Catapush.
         // See https://developer.android.com/training/notify-user/channels
-        NotificationManager nm = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-        if (nm != null) {
-            String channelName = getString(R.string.catapush_notification_channel_name);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager nm = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+            if (nm != null) {
+                String channelName = getString(R.string.catapush_notification_channel_name);
                 NotificationChannel channel = nm.getNotificationChannel(NOTIFICATION_CHANNEL_ID);
-                boolean shouldCreateOrUpdate = (channel == null || !channelName.contentEquals(channel.getName()));
-                if (shouldCreateOrUpdate) {
-                    if (channel == null) {
-                        channel = new NotificationChannel(
-                                NOTIFICATION_CHANNEL_ID,
-                                channelName,
-                                NotificationManager.IMPORTANCE_HIGH);
-                        // Customize your notification appearance here (Android >= 8.0)
-                        channel.enableVibration(true);
-                        channel.setVibrationPattern(new long[]{100, 200, 100, 300});
-                        channel.enableLights(true);
-                        channel.setLightColor(ContextCompat.getColor(this, R.color.primary));
-                    }
-                    nm.createNotificationChannel(channel);
+                if (channel == null) {
+                    channel = new NotificationChannel(
+                            NOTIFICATION_CHANNEL_ID,
+                            channelName,
+                            NotificationManager.IMPORTANCE_HIGH);
+                    // Customize your notification appearance here (Android >= 8.0)
+                    // it's possible to customize a channel only on creation
+                    channel.enableVibration(true);
+                    channel.setVibrationPattern(new long[]{100, 200, 100, 300});
+                    channel.enableLights(true);
+                    channel.setLightColor(ContextCompat.getColor(this, R.color.primary));
+                } else if (!channelName.contentEquals(channel.getName())) {
+                    // Update channel name, useful when the user changes the system language
+                    channel.setName(channelName);
                 }
+                nm.createNotificationChannel(channel);
             }
         }
 
         Catapush.getInstance()
-                // OPTIONAL received message transformation callback
-                .setMessageTransformation(new CatapushMessageTransformation() {
-                    @NonNull
-                    @Override
-                    public Model transform(@NonNull Model input) {
-                        // This callback gives you the possibility to transform the message body and
-                        // preview before storing it in the local Catapush messages DB
-                        //input.body = "The transformed message," +
-                        //        " unencrypted or with variables replaced";
-                        //input.previewText = "The transformed message.";
-                        return input;
-                    }
-                })
-                // OPTIONAL secure store initialization callback
-                .setSecureCredentialsStoreCallback(new Callback<Boolean>() {
-                    @Override
-                    public void success(Boolean aBoolean) {
-                        // Secure credentials storage has been successfully initialized.
-                        // Catapush will store the user password safely inside the Android KeyStore.
-                    }
-                    @Override
-                    public void failure(@NonNull Throwable throwable) {
-                        // Secure credentials storage is not available.
-                        // You might want to not start the messaging service on a non-secure device
-                        // and clear the Catapush instance.
-                    }
-                })
-                // REQUIRED Catapush instance initialization, must be done in Application.onCreate()
                 .init(this,
                         NOTIFICATION_CHANNEL_ID,
                         Collections.singletonList(CatapushGms.INSTANCE),
@@ -103,12 +75,13 @@ public class SampleApplication extends MultiDexApplication {
 
                                 // This is the notification template that the Catapush SDK uses to build
                                 // the status bar notification shown to the user.
-                                // Some settings like vibration, lights, etc. are duplicated here since
+                                // Some settings like vibration, lights, etc. are duplicated here because
                                 // before Android introduced notification channels (Android < 8.0) the
                                 // styling was made on a per-notification basis.
                                 final NotificationTemplate template = NotificationTemplate.builder()
                                         .swipeToDismissEnabled(false)
                                         .title("Your notification title!")
+                                        .iconId(R.drawable.ic_stat_notify_default)
                                         .vibrationEnabled(true)
                                         .vibrationPattern(new long[]{100, 200, 100, 300})
                                         .soundEnabled(true)
