@@ -205,6 +205,10 @@ The SDK now supports advanced security features provided by Android KeyStore.
 Catapush 9.0.x targets Android 9.0 (API 28) and requires Android 4.1 (API 16).
 The SDK have been migrated from Android Support Library to Android Jetpack (AndroidX).
 
+#### 9.0.19
+
+- Repackaged version to avoid dependency resolution conflicts
+
 #### 9.0.18
 
 - Fixed a bug that occurred when updating the Firebase Messaging push token but no user was configured in the SDK
