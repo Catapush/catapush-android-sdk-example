@@ -28,7 +28,7 @@ public class SampleApplication extends MultiDexApplication {
     // Constant sting ID for your notification channel.
     // The value may be truncated if it's too long.
     // See https://developer.android.com/training/notify-user/channels
-    private static final String NOTIFICATION_CHANNEL_ID = "com.catapush.example.app.MESSAGES";
+    public static final String NOTIFICATION_CHANNEL_ID = "com.catapush.example.app.MESSAGES";
 
     @Override
     public void onCreate() {

@@ -56,6 +56,7 @@
             <intent-filter>
                 <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>
                 <action android:name="com.catapush.library.action.NETWORK_ERROR"/>
+                <action android:name="com.catapush.library.action.PUSH_SERVICE_ERROR"/>
                 <action android:name="com.catapush.library.action.CONNECTED"/>
                 <action android:name="com.catapush.library.action.DISCONNECTED"/>
                 <action android:name="com.catapush.library.action.CONNECTING"/>
