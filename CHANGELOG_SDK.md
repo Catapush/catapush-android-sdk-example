@@ -34,6 +34,15 @@ To:
 android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
 ```
 
+#### 10.2.6
+
+- Added the new callback `onPushServicesError(PushServicesException, Context)` to `CatapushReceiver` and `CatapushTwoWayReceiver`.
+  This callback will forward you any error raised by the device push services installation
+  - Please update your `CatapushReceiver` and `CatapushTwoWayReceiver` implementation, see the class `com.catapush.example.app.communications.SampleReceiver` from this repository as a reference
+  - Update your `AndroidManifest.xml` to add a filter to your receiver for the new action `com.catapush.library.action.PUSH_SERVICE_ERROR`
+- Fixed an error-handling related bug that prevented the SDK from starting on devices without push services
+- Fixed an error that may cause some notifications to not be displayed in the status bar when multiple messages are delivered in a short time
+
 #### 10.2.5
 
 - The SDK will now connect to Catapush even if no push services providers are available and working on the device.
