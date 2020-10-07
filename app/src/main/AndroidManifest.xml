@@ -7,11 +7,8 @@
     <!-- This permission is needed so that your CatapushReceiver implementation will only be able
          to receive broadcasts from packages signed with the same key of your app -->
     <permission
-        android:name="${applicationId}.CATAPUSH_MESSAGE"
+        android:name="${applicationId}.permission.CATAPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -31,28 +28,11 @@
             android:name="com.catapush.library.APP_KEY"
             android:value="@string/catapush_key" />
 
-        <!-- This is the service that integrates Catapush with Google services
-             This declaration is needed by com.catapush.catapush-android-sdk:gms module -->
-        <service
-            android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <!-- The actual Catapush messaging service, to pick a meaningful label see here:
-             https://developer.android.com/guide/topics/manifest/service-element#label -->
-        <service
-            android:name="com.catapush.library.MessagingService"
-            android:label="@string/service_name"
-            android:foregroundServiceType="dataSync" />
-
         <!-- This your implementation of CatapushReceiver that receives events from the Catapush
              MessagingService, note that you have to use the same permission declared above -->
         <receiver
             android:name="com.catapush.example.app.communications.SampleReceiver"
-            android:permission="${applicationId}.CATAPUSH_MESSAGE">
+            android:permission="${applicationId}.permission.CATAPUSH_MESSAGE">
             <intent-filter>
                 <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>
                 <action android:name="com.catapush.library.action.NETWORK_ERROR"/>
