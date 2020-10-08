@@ -16,23 +16,18 @@ The available modules are:
 
 Replace your Catapush SDK dependency declaration in your app `build.gradle` file to include the `gms` module:
 ```
-implementation('com.catapush.catapush-android-sdk:gms:10.2.0')
+implementation('com.catapush.catapush-android-sdk:gms:10.2.+')
 ```
 The `core` module will be automatically added as a transitive dependency.
 
 If you also need the Catapush UI Components add the `ui` module as a dependency with this line:
 ```
-implementation('com.catapush.catapush-android-sdk:ui:10.2.0')
+implementation('com.catapush.catapush-android-sdk:ui:10.2.+')
 ```
 
-In your app `AndroidManifest.xml` file update the `CatapushFirebaseMessagingService` package from:
-```
-android:name="com.catapush.library.firebase.CatapushFirebaseMessagingService"
-```
-To:
-```
-android:name="com.catapush.library.gms.CatapushFirebaseMessagingService"
-```
+#### 10.2.7
+
+- Fixed an error introduced in version 10.2.6 that might prevent messages from being displayed as status bar notifications
 
 #### 10.2.6
 
