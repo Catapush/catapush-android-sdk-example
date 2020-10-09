@@ -163,6 +163,10 @@ Do not update active installations to Catapush 10.0.x if you're using Catapush 9
 Catapush 9.1.x targets Android 9.0 (API 28) and requires Android 4.3 (API 18).
 The SDK now supports advanced security features provided by Android KeyStore.
 
+#### 9.1.8
+
+- Minor improvements on secure credentials storage initialization
+
 #### 9.1.7
 
 - Add a new method Catapush.getInstance().rebuildSecureCredentialsStore(…) that clean secure store contents, delete cryptographic keys, recreate them and rebuild the secure store.
