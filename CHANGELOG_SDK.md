@@ -25,6 +25,10 @@ If you also need the Catapush UI Components add the `ui` module as a dependency 
 implementation('com.catapush.catapush-android-sdk:ui:10.2.+')
 ```
 
+#### 10.2.8
+
+- Minor improvements on secure credentials storage initialization
+
 #### 10.2.7
 
 - Fixed an error introduced in version 10.2.6 that might prevent messages from being displayed as status bar notifications
