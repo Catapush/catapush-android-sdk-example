@@ -25,6 +25,15 @@ If you also need the Catapush UI Components add the `ui` module as a dependency 
 implementation('com.catapush.catapush-android-sdk:ui:10.2.+')
 ```
 
+#### 10.2.9
+
+- Improvements to the secure credentials implementation. The SDK will now use two main types classes for encryption-related exceptions
+  - `CryptoException` is thrown when the crypto keys can't be recovered from the Android KeyStore and needs to be recreated. This occasionally happens when the Lock Screen settings are changed.
+  - `IncompatibleDeviceException` is thrown when the device can't understand the cryptographic settings required.
+  In both cases check the `cause` of these exceptions for more information on the error.
+- The `Catapush.setMessageTransformation(…)` has been improved and now provides the complete original message as input, see `CatapushMessageTransformation.Model.originalMessage`.
+- Fixed the delivery of messages to identifiers containing uppercase characters.
+
 #### 10.2.8
 
 - Minor improvements on secure credentials storage initialization
