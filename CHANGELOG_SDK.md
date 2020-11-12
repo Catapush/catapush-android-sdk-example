@@ -12,18 +12,35 @@ This rework will give us the ability to add new new feature modules in the near 
 The available modules are:
 - `core` the main Catapush SDK implementation
 - `gms` the integration of Catapush SDK with Google Mobile Services / Firebase Cloud Messaging
+- `hms` the integration of Catapush SDK with Huawei Mobile Services / Huawei Push Kit (starting from version 10.2.10)
 - `ui` the Catapush UI Components
 
+**Google Mobile Services**
 Replace your Catapush SDK dependency declaration in your app `build.gradle` file to include the `gms` module:
 ```
 implementation('com.catapush.catapush-android-sdk:gms:10.2.+')
 ```
 The `core` module will be automatically added as a transitive dependency.
 
-If you also need the Catapush UI Components add the `ui` module as a dependency with this line:
+**Huawei Mobile Services**
+If need to support non-GMS devices like Huawei devices with HMS, add this module (starting from version 10.2.10):
+```
+implementation('com.catapush.catapush-android-sdk:hms:10.2.+')
+```
+The `core` module will be automatically added as a transitive dependency.
+Please see the official Catapush Android SDK Documentation on how to add the HMS support in your project!
+
+**Catapush UI Components**
+To include the Catapush UI Components just add the `ui` module to your app by declaring this dependency:
 ```
 implementation('com.catapush.catapush-android-sdk:ui:10.2.+')
 ```
+
+#### 10.2.10 (12/11/2020)
+
+- New feature: Huawei Mobile Services (HMS) is now officially supported.
+- Fixed a bug that could prevent the correct migration of encrypted data from 9.1.x versions. Upgrading to this version also recovers the non-migrated data, if any.
+- Fixed a crash on older Android devices caused by an unexpected Android KeyStore behavior.
 
 #### 10.2.9 (29/10/2020)
 
