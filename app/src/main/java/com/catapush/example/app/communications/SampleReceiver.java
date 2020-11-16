@@ -16,6 +16,7 @@ import com.catapush.library.exceptions.PushServicesException;
 import com.catapush.library.messages.CatapushMessage;
 import com.catapush.library.push.models.PushPlatformType;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.huawei.hms.api.HuaweiApiAvailability;
 
 public class SampleReceiver extends CatapushTwoWayReceiver {
 
@@ -86,6 +87,11 @@ public class SampleReceiver extends CatapushTwoWayReceiver {
             gmsAvailability.setDefaultNotificationChannelId(
                     context, SampleApplication.NOTIFICATION_CHANNEL_ID);
             gmsAvailability.showErrorNotification(context, e.getErrorCode());
+        } else if (PushPlatformType.HMS.name().equals(e.getPlatform()) && e.isUserResolvable()) {
+            // It's a HMS error and it's user resolvable: show a notification to the user
+            Log.w(SampleReceiver.class.getSimpleName(), "HMS error: " + e.getErrorMessage());
+            HuaweiApiAvailability hmsAvailability = HuaweiApiAvailability.getInstance();
+            hmsAvailability.showErrorNotification(context, e.getErrorCode());
         }
     }
 
