@@ -44,9 +44,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     // Catapush SDK
-    implementation('com.catapush.catapush-android-sdk:gms:10.2.15')
-    implementation('com.catapush.catapush-android-sdk:hms:10.2.15')
-    implementation('com.catapush.catapush-android-sdk:ui:10.2.15')
+    implementation('com.catapush.catapush-android-sdk:gms:10.2.16')
+    implementation('com.catapush.catapush-android-sdk:hms:10.2.16')
+    implementation('com.catapush.catapush-android-sdk:ui:10.2.16')
 }
 
 apply plugin: 'com.google.gms.google-services'
