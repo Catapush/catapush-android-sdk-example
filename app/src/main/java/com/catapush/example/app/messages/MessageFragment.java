@@ -1,11 +1,13 @@
 package com.catapush.example.app.messages;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.catapush.example.app.MainActivity;
+import com.catapush.example.app.MessageContract;
+import com.catapush.example.app.MessagePresenter;
 import com.catapush.example.app.R;
 import com.catapush.example.app.SampleViewModelFactory;
-import com.catapush.example.app.TitleChange;
+import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.Callback;
 import com.catapush.library.messages.CatapushMessage;
 import com.catapush.library.ui.recyclerview.CatapushMessagesAdapter;
@@ -30,16 +35,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MessageFragment
         extends Fragment
-        implements MessageView, Observer<PagedList<CatapushMessage>> {
+        implements MessageContract.MessageView, Observer<PagedList<CatapushMessage>> {
 
-    private MessagePresenter presenter;
-    private TitleChange titleChanger;
+    private final MessagePresenter presenter = new MessagePresenter(this);
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private SendFieldView sendFieldView;
     private CatapushMessagesAdapter adapter;
 
-    private CatapushMessagesAdapter.ActionListener actionListener = new CatapushMessagesAdapter.ActionListener() {
+    private final CatapushMessagesAdapter.ActionListener actionListener = new CatapushMessagesAdapter.ActionListener() {
         @Override
         public void onMessageLongClick(@NonNull View view, @NonNull CatapushMessage message, int position) {
             //TODO: implement
@@ -61,14 +65,12 @@ public class MessageFragment
         }
     };
 
-    private CatapushMessagesAdapter.SendFieldViewProvider sendProvider = () -> sendFieldView;
+    private final CatapushMessagesAdapter.SendFieldViewProvider sendProvider = () -> sendFieldView;
 
-    private Callback<CatapushMessage> deleteMessageCallback = new Callback<CatapushMessage>() {
+    private final Callback<CatapushMessage> deleteMessageCallback = new Callback<CatapushMessage>() {
         @Override
         public void success(CatapushMessage message) {
-            if (presenter != null) {
-                presenter.onMessageDeleted(message);
-            }
+            presenter.onMessageDeleted(message);
         }
         @Override
         public void failure(@NonNull Throwable t) {
@@ -114,6 +116,13 @@ public class MessageFragment
         recyclerView = rootView.findViewById(R.id.messages_recyclerview);
         sendFieldView = rootView.findViewById(R.id.send_container);
 
+        sendFieldView.setAttachButtonClickListener(v -> {
+            presenter.onPickAttachmentRequest("image/*");
+            // Other examples:
+            // - openFilePicker("text/plain");
+            // - openFilePicker("application/pdf");
+        });
+
         RecyclerView recyclerView = rootView.findViewById(R.id.messages_recyclerview);
         recyclerView.setLayoutManager(new CatapushMessagesLayoutManager(getContext()));
         recyclerView.setHasFixedSize(false);
@@ -123,9 +132,9 @@ public class MessageFragment
                 = new CatapushMessageTouchHelper.RemoveOnSwipeBehavior(adapter, deleteMessageCallback);
         CatapushMessageTouchHelper.attachToRecyclerView(recyclerView, deleteBehavior);
 
-        if (titleChanger != null) {
-            titleChanger.set(getString(R.string.messages_fragment_title));
-        }
+
+        presenter.onViewTitleChanged(getString(R.string.messages_fragment_title));
+
         return rootView;
     }
 
@@ -138,11 +147,22 @@ public class MessageFragment
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        presenter = new MessagePresenter(this);
+        if (context instanceof MainActivity) {
+            ((MainActivity) context).setPresenter(presenter);
+        }
+        if (context instanceof MessageContract.MainView) {
+            presenter.setMainView((MessageContract.MainView) context);
+        }
     }
 
-    public void setTitleChanger(@NonNull TitleChange change) {
-        titleChanger = change;
+    @Override
+    public void onDetach() {
+        final Context context = getContext();
+        if (context instanceof MainActivity) {
+            ((MainActivity) context).setPresenter(presenter);
+        }
+        presenter.setMainView(null);
+        super.onDetach();
     }
 
     @Override
@@ -158,6 +178,20 @@ public class MessageFragment
                     })
                     .show();
         }
+    }
+
+    @Override
+    public void attachFile(@NonNull Uri attachmentUri) {
+        String originalMessageId = sendFieldView.getOriginalMessageId();
+        Catapush.getInstance().sendFile(attachmentUri, "", null, originalMessageId, new Callback<Boolean>() {
+            public void success(Boolean response) {
+                Toast.makeText(getContext(), "File sent", Toast.LENGTH_LONG).show();
+            }
+
+            public void failure(@NonNull Throwable irrecoverableError) {
+                Toast.makeText(getContext(), "Can't send file", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
