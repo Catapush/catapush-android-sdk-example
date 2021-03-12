@@ -19,8 +19,8 @@ public class SampleCatapushStateManager {
     public static final SampleCatapushStateManager INSTANCE = new SampleCatapushStateManager();
 
     private CatapushStarter mStarter;
-    private BehaviorSubject<Status> mCurrentStatus = BehaviorSubject.create();
-    private PublishSubject<Boolean> mReconnectRequest = PublishSubject.create();
+    private final BehaviorSubject<Status> mCurrentStatus = BehaviorSubject.create();
+    private final PublishSubject<Boolean> mReconnectRequest = PublishSubject.create();
     private CompositeDisposable mSubscriptions = new CompositeDisposable();
 
     private SampleCatapushStateManager() {}
