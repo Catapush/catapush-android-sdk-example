@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -109,19 +108,11 @@ public class MainActivity
 
     @Override
     public void openFilePicker(@NonNull String mimeType) {
-        final Intent intent;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.setType("*/*");
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { mimeType });
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        } else {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType(mimeType);
-            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        }
+        final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { mimeType });
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
 
         try {
             startActivityForResult(intent, REQUEST_FILE_PICKER);
@@ -136,13 +127,11 @@ public class MainActivity
             if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 Uri uri = data.getData();
                 Exception e = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    try {
-                        getContentResolver().takePersistableUriPermission(
-                                uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    } catch (SecurityException se) {
-                        e = se;
-                    }
+                try {
+                    getContentResolver().takePersistableUriPermission(
+                            uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (SecurityException se) {
+                    e = se;
                 }
                 if (e == null && presenter != null) {
                     presenter.onAttachmentPicked(uri);
