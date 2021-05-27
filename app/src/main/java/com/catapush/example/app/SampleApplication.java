@@ -2,9 +2,12 @@ package com.catapush.example.app;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -62,7 +65,22 @@ public class SampleApplication extends MultiDexApplication {
             nm.createNotificationChannel(channel);
         }
 
-        Catapush.getInstance().init(
+        Catapush.getInstance()
+                .setNotificationIntent((catapushMessage, context) -> {
+                    Log.d(SampleApplication.class.getSimpleName(), "Notification tapped: " + catapushMessage);
+                    // This is the Activity you want to open when a notification is tapped:
+                    Intent intent = new Intent(context, MainActivity.class);
+                    // This is a unique URI set to the Intent to avoid its recycling for different
+                    // Notifications when it's set as PendingIntent in the NotificationManager.
+                    // There's no need to provide a valid scheme or path, it just need to be unique.
+                    intent.setData(Uri.parse("catapush://message/" + catapushMessage.id()));
+                    intent.putExtra("message", catapushMessage);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    // This PendingIntent will be set as "ContentIntent" in the local notification
+                    // shown to the user in the Android notifications UI and launched on tap
+                    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                })
+                .init(
                 this,
                 NOTIFICATION_CHANNEL_ID,
                 Collections.singletonList(CatapushGms.INSTANCE),

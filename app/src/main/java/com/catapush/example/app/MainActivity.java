@@ -17,6 +17,7 @@ import com.catapush.example.app.managers.SampleCatapushStateManager;
 import com.catapush.example.app.messages.MessageFragment;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.RecoverableErrorCallback;
+import com.catapush.library.messages.CatapushMessage;
 
 public class MainActivity
         extends AppCompatActivity
@@ -41,6 +42,24 @@ public class MainActivity
         }
 
         SampleCatapushStateManager.INSTANCE.init(this);
+
+        if (getIntent().hasExtra("message")) {
+            handleCatapushMessageIntent(getIntent());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent.hasExtra("message")) {
+            handleCatapushMessageIntent(intent);
+        } else {
+            super.onNewIntent(intent);
+        }
+    }
+
+    private void handleCatapushMessageIntent(Intent intent) {
+        CatapushMessage message = intent.getParcelableExtra("message");
+        Log.d(MainActivity.class.getSimpleName(), "Notification tapped event received for message: " + message);
     }
 
     @Override

@@ -1,12 +1,10 @@
 package com.catapush.example.app.communications;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.catapush.example.app.MainActivity;
 import com.catapush.example.app.SampleApplication;
 import com.catapush.example.app.managers.SampleCatapushStateManager;
 import com.catapush.library.CatapushTwoWayReceiver;
@@ -50,15 +48,6 @@ public class SampleReceiver extends CatapushTwoWayReceiver {
     @Override
     public void onMessageSentConfirmed(@NonNull CatapushMessage catapushMessage, @NonNull Context context) {
         Log.d(SampleReceiver.class.getSimpleName(), "Message sent and delivered");
-    }
-
-    @Override
-    public void onNotificationClicked(@NonNull CatapushMessage catapushMessage, @NonNull Context context) {
-        Log.d(SampleReceiver.class.getSimpleName(), "Notification clicked: " + catapushMessage);
-
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        context.startActivity(intent);
     }
 
     @Override

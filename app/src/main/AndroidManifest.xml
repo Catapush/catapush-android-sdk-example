@@ -46,9 +46,9 @@
                 <action android:name="com.catapush.library.action.CONNECTING"/>
                 <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>
                 <action android:name="com.catapush.library.action.MESSAGE_OPENED"/>
+                <action android:name="com.catapush.library.action.MESSAGE_OPENED_CONFIRMED"/>
                 <action android:name="com.catapush.library.action.MESSAGE_SENT"/>
                 <action android:name="com.catapush.library.action.MESSAGE_SENT_CONFIRMED"/>
-                <action android:name="com.catapush.library.action.NOTIFICATION_CLICKED" />
                 <category android:name="${applicationId}"/>
             </intent-filter>
         </receiver>
