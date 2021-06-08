@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.catapush.example.app">
+    package="com.catapush.android.example">
 
     <!-- This permission is needed so that your CatapushReceiver implementation will only be able
          to receive broadcasts from packages signed with the same key of your app -->
@@ -17,7 +17,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name="com.catapush.example.app.SampleApplication"
+        android:name=".SampleApplication"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:fullBackupContent="false"
@@ -35,7 +35,7 @@
         <!-- This your implementation of CatapushReceiver that receives events from the Catapush
              MessagingService, note that you have to use the same permission declared above -->
         <receiver
-            android:name="com.catapush.example.app.communications.SampleReceiver"
+            android:name=".communications.SampleReceiver"
             android:permission="${applicationId}.permission.CATAPUSH_MESSAGE">
             <intent-filter>
                 <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>

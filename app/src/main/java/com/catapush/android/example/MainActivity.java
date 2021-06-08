@@ -1,4 +1,4 @@
-package com.catapush.example.app;
+package com.catapush.android.example;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.catapush.example.app.managers.SampleCatapushStateManager;
-import com.catapush.example.app.messages.MessageFragment;
+import com.catapush.android.example.managers.SampleCatapushStateManager;
+import com.catapush.android.example.messages.MessageFragment;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.RecoverableErrorCallback;
 import com.catapush.library.messages.CatapushMessage;
@@ -88,7 +88,7 @@ public class MainActivity
                 .start(new RecoverableErrorCallback<Boolean>() {
                     @Override
                     public void success(Boolean aBoolean) {
-                        Log.d(MainActivity.class.getCanonicalName(), "Catapush has been successfully started");
+                        Log.d(MainActivity.class.getCanonicalName(), "Catapush is starting");
                     }
                     @Override
                     public void warning(@NonNull Throwable throwable) {

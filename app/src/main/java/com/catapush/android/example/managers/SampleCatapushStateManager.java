@@ -1,4 +1,4 @@
-package com.catapush.example.app.managers;
+package com.catapush.android.example.managers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

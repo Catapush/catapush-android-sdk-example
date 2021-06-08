@@ -1,12 +1,12 @@
-package com.catapush.example.app.communications;
+package com.catapush.android.example.communications;
 
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.catapush.example.app.SampleApplication;
-import com.catapush.example.app.managers.SampleCatapushStateManager;
+import com.catapush.android.example.SampleApplication;
+import com.catapush.android.example.managers.SampleCatapushStateManager;
 import com.catapush.library.CatapushTwoWayReceiver;
 import com.catapush.library.exceptions.CatapushApiException;
 import com.catapush.library.exceptions.CatapushAuthenticationError;

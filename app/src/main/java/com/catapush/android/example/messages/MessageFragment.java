@@ -1,4 +1,4 @@
-package com.catapush.example.app.messages;
+package com.catapush.android.example.messages;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,11 +18,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.catapush.example.app.MainActivity;
-import com.catapush.example.app.MessageContract;
-import com.catapush.example.app.MessagePresenter;
-import com.catapush.example.app.R;
-import com.catapush.example.app.SampleViewModelFactory;
+import com.catapush.android.example.MainActivity;
+import com.catapush.android.example.MessageContract;
+import com.catapush.android.example.MessagePresenter;
+import com.catapush.android.example.R;
+import com.catapush.android.example.SampleViewModelFactory;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.Callback;
 import com.catapush.library.messages.CatapushMessage;

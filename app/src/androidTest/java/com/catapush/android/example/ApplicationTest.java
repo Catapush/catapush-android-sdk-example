@@ -1,4 +1,4 @@
-package com.catapush.example.app;
+package com.catapush.android.example;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.catapush.example.app.messages;
+package com.catapush.android.example.messages;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

@@ -1,11 +1,11 @@
-package com.catapush.example.app;
+package com.catapush.android.example;
 
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.catapush.example.app.messages.MessagingViewModel;
+import com.catapush.android.example.messages.MessagingViewModel;
 
 
 public class SampleViewModelFactory implements ViewModelProvider.Factory {
