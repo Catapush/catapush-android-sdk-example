@@ -40,8 +40,6 @@ public class MainActivity
                     .commit();
         }
 
-        SampleCatapushStateManager.INSTANCE.init(this);
-
         if (getIntent().hasExtra("message")) {
             handleCatapushMessageIntent(getIntent());
         }
@@ -66,6 +64,8 @@ public class MainActivity
         super.onResume();
         // Our app is open and we don't want status bar notification in this scenario
         Catapush.getInstance().pauseNotifications();
+        // Start monitoring Catapush status to keep it connected
+        SampleCatapushStateManager.INSTANCE.init(this);
     }
 
     @Override
@@ -73,12 +73,8 @@ public class MainActivity
         super.onPause();
         // Our app is not visible and we want status bar notification in this scenario
         Catapush.getInstance().resumeNotifications();
-    }
-
-    @Override
-    protected void onDestroy() {
+        // Stop to monitor the Catapush status to avoid starting it while in the background
         SampleCatapushStateManager.INSTANCE.dispose();
-        super.onDestroy();
     }
 
     public void startCatapush() {
