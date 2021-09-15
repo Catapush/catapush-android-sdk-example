@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedList;
+import androidx.paging.CombinedLoadStates;
+import androidx.paging.LoadState;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.catapush.android.example.MainActivity;
@@ -32,16 +32,48 @@ import com.catapush.library.ui.widget.CatapushMessageTouchHelper;
 import com.catapush.library.ui.widget.SendFieldView;
 import com.google.android.material.snackbar.Snackbar;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 
 public class MessageFragment
         extends Fragment
-        implements MessageContract.MessageView, Observer<PagedList<CatapushMessage>> {
+        implements MessageContract.MessageView {
 
     private final MessagePresenter presenter = new MessagePresenter(this);
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private SendFieldView sendFieldView;
     private CatapushMessagesAdapter adapter;
+    private Disposable messageListSubscription;
+    private int prevAdapterCount = 0;
+    private final Function1<CombinedLoadStates, Unit> loadEndListener = new Function1<CombinedLoadStates, Unit>() {
+        boolean wasLoading = false;
+        @Override
+        public Unit invoke(CombinedLoadStates combinedLoadStates) {
+            if (!wasLoading && combinedLoadStates.getRefresh() instanceof LoadState.Loading) {
+                wasLoading = true;
+            } else if (wasLoading && combinedLoadStates.getRefresh() instanceof LoadState.NotLoading) {
+                int newCount = adapter.getItemCount();
+                if (recyclerView != null && prevAdapterCount != newCount) {
+                    if (prevAdapterCount == 0) {
+                        // First change, no messages already displayed: go to the bottom
+                        recyclerView.scrollToPosition(0);
+                    } else if (prevAdapterCount < newCount) {
+                        // Message received with other messages already loaded, scroll to bottom
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                    prevAdapterCount = newCount;
+                }
+                wasLoading = false;
+            } else {
+                wasLoading = false;
+            }
+            return null;
+        }
+    };
 
     private final CatapushMessagesAdapter.ActionListener actionListener = new CatapushMessagesAdapter.ActionListener() {
         @Override
@@ -84,28 +116,21 @@ public class MessageFragment
         setHasOptionsMenu(true);
 
         adapter = new CatapushMessagesAdapter(actionListener, sendProvider);
+        adapter.addLoadStateListener(loadEndListener);
         MessagingViewModel viewModel = new ViewModelProvider(this.getViewModelStore(), new SampleViewModelFactory())
                 .get(MessagingViewModel.class)
                 .init();
         if (viewModel.messageList != null) {
-            viewModel.messageList.observe(this, this);
+            messageListSubscription = viewModel.messageList
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            pagingData -> {
+                                prevAdapterCount = adapter.getItemCount();
+                                adapter.submitData(getLifecycle(), pagingData);
+                            },
+                            e -> Log.e("MyApp", "Message list flowable error", e)
+                    );
         }
-    }
-
-    @Override
-    public void onChanged(PagedList<CatapushMessage> catapushMessages) {
-        int prevCount = adapter.getItemCount();
-        adapter.submitList(catapushMessages, () -> {
-            if (recyclerView != null) {
-                if (prevCount == 0) {
-                    // First change, no messages already displayed: go to the bottom
-                    recyclerView.scrollToPosition(0);
-                } else if (prevCount < adapter.getItemCount()) {
-                    // Message received with other messages already loaded, scroll to bottom
-                    recyclerView.smoothScrollToPosition(0);
-                }
-            }
-        });
     }
 
     @Override
@@ -141,6 +166,8 @@ public class MessageFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        adapter.removeLoadStateListener(loadEndListener);
+        messageListSubscription.dispose();
         sendFieldView = null;
     }
 

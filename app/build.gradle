@@ -47,10 +47,13 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.paging:paging-runtime-ktx:3.0.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation 'androidx.paging:paging-common:3.0.1'
     // Catapush SDK
-    implementation('com.catapush.catapush-android-sdk:gms:11.0.5')
-    implementation('com.catapush.catapush-android-sdk:hms:11.0.5')
-    implementation('com.catapush.catapush-android-sdk:ui:11.0.5')
+    implementation('com.catapush.catapush-android-sdk:gms:11.1.0')
+    implementation('com.catapush.catapush-android-sdk:hms:11.1.0')
+    implementation('com.catapush.catapush-android-sdk:ui:11.1.0')
 }
 
 apply plugin: 'com.google.gms.google-services'
