@@ -115,7 +115,7 @@ public class MessageFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        adapter = new CatapushMessagesAdapter(actionListener, sendProvider);
+        adapter = new CatapushMessagesAdapter(getLifecycle(), actionListener, sendProvider);
         adapter.addLoadStateListener(loadEndListener);
         MessagingViewModel viewModel = new ViewModelProvider(this.getViewModelStore(), new SampleViewModelFactory())
                 .get(MessagingViewModel.class)
