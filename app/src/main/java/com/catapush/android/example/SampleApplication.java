@@ -5,7 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -45,25 +45,43 @@ public class SampleApplication extends MultiDexApplication {
         // See https://developer.android.com/training/notify-user/channels
         NotificationManager nm = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
         if (nm != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelName = getString(R.string.notification_channel_name);
-            NotificationChannel channel = nm.getNotificationChannel(NOTIFICATION_CHANNEL_ID);
-            if (channel == null) {
-                channel = new NotificationChannel(
-                        NOTIFICATION_CHANNEL_ID,
-                        channelName,
-                        NotificationManager.IMPORTANCE_HIGH);
-                // Customize your notification appearance here (Android >= 8.0)
-                // it's possible to customize a channel only on creation
-                channel.enableVibration(true);
-                channel.setVibrationPattern(new long[]{100, 200, 100, 300});
-                channel.enableLights(true);
-                channel.setLightColor(ContextCompat.getColor(this, R.color.primary));
-            } else if (!channelName.contentEquals(channel.getName())) {
-                // Update channel name, useful when the user changes the system language
-                channel.setName(channelName);
-            }
+            NotificationChannel channel = new NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID,
+                    getString(R.string.notification_channel_name),
+                    NotificationManager.IMPORTANCE_HIGH);
+            // Customize your notification appearance here (Android >= 8.0)
+            // it's possible to customize a channel only on creation
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 200, 100, 300});
+            channel.enableLights(true);
+            channel.setLightColor(ContextCompat.getColor(this, R.color.primary));
+            channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                    new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                            .build());
             nm.createNotificationChannel(channel);
         }
+
+        // This is the notification template that the Catapush SDK uses to build
+        // the status bar notification shown to the user.
+        // Some settings like vibration, lights, etc. are duplicated here because
+        // before Android introduced notification channels (Android < 8.0) the
+        // styling was made on a per-notification basis.
+        int primaryColor = ContextCompat.getColor(this, R.color.primary);
+        final NotificationTemplate template = new NotificationTemplate.Builder(NOTIFICATION_CHANNEL_ID)
+                .swipeToDismissEnabled(false)
+                .title("Your notification title!")
+                .iconId(R.drawable.ic_stat_notify_default)
+                .vibrationEnabled(true)
+                .vibrationPattern(new long[]{100, 200, 100, 300})
+                .soundEnabled(true)
+                .soundResourceUri(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .circleColor(primaryColor)
+                .ledEnabled(true)
+                .ledColor(primaryColor)
+                .ledOnMS(2000)
+                .ledOffMS(1000)
+                .build();
 
         Catapush.getInstance()
                 .setNotificationIntent((catapushMessage, context) -> {
@@ -82,34 +100,13 @@ public class SampleApplication extends MultiDexApplication {
                 })
                 .init(
                         this,
-                        NOTIFICATION_CHANNEL_ID,
                         Collections.singletonList(CatapushGms.INSTANCE),
+                        template, // This is the main/default notification channel
+                        null, // If you'd like to support more than one notification channel, pass the templates here
                         new Callback<Boolean>() {
                             @Override
                             public void success(Boolean response) {
                                 Log.d(SampleApplication.class.getCanonicalName(), "Catapush has been successfully initialized");
-
-                                // This is the notification template that the Catapush SDK uses to build
-                                // the status bar notification shown to the user.
-                                // Some settings like vibration, lights, etc. are duplicated here because
-                                // before Android introduced notification channels (Android < 8.0) the
-                                // styling was made on a per-notification basis.
-                                final NotificationTemplate template = NotificationTemplate.builder()
-                                        .swipeToDismissEnabled(false)
-                                        .title("Your notification title!")
-                                        .iconId(R.drawable.ic_stat_notify_default)
-                                        .vibrationEnabled(true)
-                                        .vibrationPattern(new long[]{100, 200, 100, 300})
-                                        .soundEnabled(true)
-                                        .soundResourceUri(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-                                        .circleColor(ContextCompat.getColor(SampleApplication.this, R.color.primary))
-                                        .ledEnabled(true)
-                                        .ledColor(Color.BLUE)
-                                        .ledOnMS(2000)
-                                        .ledOffMS(1000)
-                                        .build();
-
-                                Catapush.getInstance().setNotificationTemplate(template);
                             }
 
                             @Override
