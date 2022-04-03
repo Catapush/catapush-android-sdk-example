@@ -52,9 +52,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation 'androidx.paging:paging-common:3.0.1'
     // Catapush SDK
-    implementation 'com.catapush.catapush-android-sdk:gms:11.2.0'
-    implementation 'com.catapush.catapush-android-sdk:hms:11.2.0'
-    implementation 'com.catapush.catapush-android-sdk:ui:11.2.0'
+    implementation 'com.catapush.catapush-android-sdk:gms:11.2.1'
+    implementation 'com.catapush.catapush-android-sdk:hms:11.2.1'
+    implementation 'com.catapush.catapush-android-sdk:ui:11.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
