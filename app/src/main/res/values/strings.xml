@@ -7,7 +7,7 @@
     <string name="undo">Undo</string>
     <string name="message_delete">"Message \"%1$s\" has been deleted."</string>
 
-    <string name="catapush_key">"-- Add your Catapush app key --"</string>
-    <string name="catapush_username">"-- Add your Catapush user Identifier --"</string>
-    <string name="catapush_password">"-- Add your Catapush user Password --"</string>
+    <string name="catapush_key">"8ac4f4c4d05881a519bf54416f58b8fb"</string>
+    <string name="catapush_username">"code"</string>
+    <string name="catapush_password">"t3stt3st"</string>
 </resources>

@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.catapush.android.example">
 
-    <!-- This permission is needed so that your CatapushReceiver implementation will only be able
-         to receive broadcasts from packages signed with the same key of your app -->
-    <permission
-        android:name="${applicationId}.permission.CATAPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -32,31 +26,11 @@
             android:name="com.catapush.library.APP_KEY"
             android:value="@string/catapush_key" />
 
-        <!-- This your implementation of CatapushReceiver that receives events from the Catapush
-             MessagingService, note that you have to use the same permission declared above -->
-        <receiver
-            android:name=".communications.SampleReceiver"
-            android:permission="${applicationId}.permission.CATAPUSH_MESSAGE">
-            <intent-filter>
-                <action android:name="com.catapush.library.action.INVALID_LIBRARY"/>
-                <action android:name="com.catapush.library.action.NETWORK_ERROR"/>
-                <action android:name="com.catapush.library.action.PUSH_SERVICE_ERROR"/>
-                <action android:name="com.catapush.library.action.CONNECTED"/>
-                <action android:name="com.catapush.library.action.DISCONNECTED"/>
-                <action android:name="com.catapush.library.action.CONNECTING"/>
-                <action android:name="com.catapush.library.action.MESSAGE_RECEIVED"/>
-                <action android:name="com.catapush.library.action.MESSAGE_OPENED"/>
-                <action android:name="com.catapush.library.action.MESSAGE_OPENED_CONFIRMED"/>
-                <action android:name="com.catapush.library.action.MESSAGE_SENT"/>
-                <action android:name="com.catapush.library.action.MESSAGE_SENT_CONFIRMED"/>
-                <category android:name="${applicationId}"/>
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

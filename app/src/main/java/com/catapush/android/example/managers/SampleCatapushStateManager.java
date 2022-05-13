@@ -57,7 +57,7 @@ public class SampleCatapushStateManager {
         mSubscriptions.add(reconnectionExecutor);
 
         // Set initial status
-        if (Catapush.getInstance().isRunning()) {
+        if (Catapush.getInstance().isConnected()) {
             processStatus(Status.CONNECTED);
         } else if (Catapush.getInstance().isConnecting()) {
             processStatus(Status.CONNECTING);
