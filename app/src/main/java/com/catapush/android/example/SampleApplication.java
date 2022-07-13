@@ -103,6 +103,11 @@ public class SampleApplication extends MultiDexApplication {
             }
 
             @Override
+            public void onMessageReceivedConfirmed(@NonNull CatapushMessage message) {
+                Log.d(SampleApplication.class.getSimpleName(), "Received message confirmed: " + message);
+            }
+
+            @Override
             public void onMessageOpened(@NonNull CatapushMessage message) {
                 Log.d(SampleApplication.class.getSimpleName(), "Opened message: " + message);
             }
