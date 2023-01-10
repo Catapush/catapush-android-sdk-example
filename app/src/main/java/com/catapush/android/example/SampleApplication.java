@@ -24,6 +24,8 @@ import com.catapush.library.exceptions.PushServicesException;
 import com.catapush.library.gms.CatapushGms;
 import com.catapush.library.interfaces.Callback;
 import com.catapush.library.interfaces.ICatapushEventDelegate;
+import com.catapush.library.interfaces.ICatapushInitializer;
+import com.catapush.library.interfaces.ICatapushNotificationIntentProvider;
 import com.catapush.library.messages.CatapushMessage;
 import com.catapush.library.notifications.NotificationTemplate;
 import com.catapush.library.push.models.PushPlatformType;
@@ -37,97 +39,115 @@ import java.util.Collections;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 
-public class SampleApplication extends MultiDexApplication {
+public class SampleApplication extends MultiDexApplication implements ICatapushInitializer {
 
     // Constant sting ID for your notification channel.
     // The value may be truncated if it's too long.
     // See https://developer.android.com/training/notify-user/channels
     public static final String NOTIFICATION_CHANNEL_ID = "com.catapush.example.app.MESSAGES";
 
+    ICatapushEventDelegate catapushEventDelegate = new ICatapushEventDelegate() {
+        @Override
+        public void onRegistrationFailed(@NonNull CatapushAuthenticationError error) {
+            Log.e(SampleApplication.class.getSimpleName(), "Error Message: " + error);
+            if (error.getCause() instanceof CatapushApiException &&
+                    ((CatapushApiException) error.getCause()).getReasonCode() == CatapushApiException.API_INTERNAL_ERROR) {
+                SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.API_ERROR);
+            } else {
+                SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.AUTH_FAILED);
+            }
+        }
+
+        @Override
+        public void onConnecting() {
+            Log.d(SampleApplication.class.getSimpleName(), "Connecting...");
+            SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.CONNECTING);
+        }
+
+        @Override
+        public void onConnected() {
+            Log.d(SampleApplication.class.getSimpleName(), "Connected");
+            SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.CONNECTED);
+        }
+
+        @Override
+        public void onDisconnected(@NonNull CatapushConnectionError error) {
+            Log.d(SampleApplication.class.getSimpleName(), "Disconnected: " + error.getReasonCode());
+            SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.DISCONNECTED);
+        }
+
+        @Override
+        public void onPushServicesError(@NonNull PushServicesException e) {
+            if (PushPlatformType.GMS.name().equals(e.getPlatform()) && e.isUserResolvable()) {
+                // It's a GMS error and it's user resolvable: show a notification to the user
+                Log.w(SampleApplication.class.getSimpleName(), "GMS error: " + e.getErrorMessage());
+                GoogleApiAvailability gmsAvailability = GoogleApiAvailability.getInstance();
+                gmsAvailability.setDefaultNotificationChannelId(
+                        SampleApplication.this, SampleApplication.NOTIFICATION_CHANNEL_ID);
+                gmsAvailability.showErrorNotification(SampleApplication.this, e.getErrorCode());
+            } else if (PushPlatformType.HMS.name().equals(e.getPlatform()) && e.isUserResolvable()) {
+                // It's a HMS error and it's user resolvable: show a notification to the user
+                Log.w(SampleApplication.class.getSimpleName(), "HMS error: " + e.getErrorMessage());
+                HuaweiApiAvailability hmsAvailability = HuaweiApiAvailability.getInstance();
+                hmsAvailability.showErrorNotification(SampleApplication.this, e.getErrorCode());
+            }
+        }
+
+        @Override
+        public void onMessageReceived(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Received message: " + message);
+        }
+
+        @Override
+        public void onMessageReceivedConfirmed(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Received message confirmed: " + message);
+        }
+
+        @Override
+        public void onMessageOpened(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Opened message: " + message);
+        }
+
+        @Override
+        public void onMessageOpenedConfirmed(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Opened message confirmed: " + message);
+        }
+
+        @Override
+        public void onMessageSent(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Message marked as sent");
+        }
+
+        @Override
+        public void onMessageSentConfirmed(@NonNull CatapushMessage message) {
+            Log.d(SampleApplication.class.getSimpleName(), "Message sent and delivered");
+        }
+    };
+
+    ICatapushNotificationIntentProvider catapushNotificationIntentProvider = (catapushMessage, context) -> {
+        Log.d(SampleApplication.class.getSimpleName(), "Notification tapped: " + catapushMessage);
+        // This is the Activity you want to open when a notification is tapped:
+        Intent intent = new Intent(context, MainActivity.class);
+        // This is a unique URI set to the Intent to avoid its recycling for different
+        // Notifications when it's set as PendingIntent in the NotificationManager.
+        // There's no need to provide a valid scheme or path, it just need to be unique.
+        intent.setData(Uri.parse("catapush://message/" + catapushMessage.id()));
+        intent.putExtra("message", catapushMessage);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        // This PendingIntent will be set as "ContentIntent" in the local notification
+        // shown to the user in the Android notifications UI and launched on tap
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
-
         setupRxErrorHandler(); // Required
+        initCatapush(); // Required
+    }
 
-        ICatapushEventDelegate catapushEventDelegate = new ICatapushEventDelegate() {
-            @Override
-            public void onRegistrationFailed(@NonNull CatapushAuthenticationError error) {
-                Log.e(SampleApplication.class.getSimpleName(), "Error Message: " + error);
-                if (error.getCause() instanceof CatapushApiException &&
-                        ((CatapushApiException) error.getCause()).getReasonCode() == CatapushApiException.API_INTERNAL_ERROR) {
-                    SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.API_ERROR);
-                } else {
-                    SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.AUTH_FAILED);
-                }
-            }
-
-            @Override
-            public void onConnecting() {
-                Log.d(SampleApplication.class.getSimpleName(), "Connecting...");
-                SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.CONNECTING);
-            }
-
-            @Override
-            public void onConnected() {
-                Log.d(SampleApplication.class.getSimpleName(), "Connected");
-                SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.CONNECTED);
-            }
-
-            @Override
-            public void onDisconnected(@NonNull CatapushConnectionError error) {
-                Log.d(SampleApplication.class.getSimpleName(), "Disconnected: " + error.getReasonCode());
-                SampleCatapushStateManager.INSTANCE.processStatus(SampleCatapushStateManager.Status.DISCONNECTED);
-            }
-
-            @Override
-            public void onPushServicesError(@NonNull PushServicesException e) {
-                if (PushPlatformType.GMS.name().equals(e.getPlatform()) && e.isUserResolvable()) {
-                    // It's a GMS error and it's user resolvable: show a notification to the user
-                    Log.w(SampleApplication.class.getSimpleName(), "GMS error: " + e.getErrorMessage());
-                    GoogleApiAvailability gmsAvailability = GoogleApiAvailability.getInstance();
-                    gmsAvailability.setDefaultNotificationChannelId(
-                            SampleApplication.this, SampleApplication.NOTIFICATION_CHANNEL_ID);
-                    gmsAvailability.showErrorNotification(SampleApplication.this, e.getErrorCode());
-                } else if (PushPlatformType.HMS.name().equals(e.getPlatform()) && e.isUserResolvable()) {
-                    // It's a HMS error and it's user resolvable: show a notification to the user
-                    Log.w(SampleApplication.class.getSimpleName(), "HMS error: " + e.getErrorMessage());
-                    HuaweiApiAvailability hmsAvailability = HuaweiApiAvailability.getInstance();
-                    hmsAvailability.showErrorNotification(SampleApplication.this, e.getErrorCode());
-                }
-            }
-
-            @Override
-            public void onMessageReceived(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Received message: " + message);
-            }
-
-            @Override
-            public void onMessageReceivedConfirmed(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Received message confirmed: " + message);
-            }
-
-            @Override
-            public void onMessageOpened(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Opened message: " + message);
-            }
-
-            @Override
-            public void onMessageOpenedConfirmed(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Opened message confirmed: " + message);
-            }
-
-            @Override
-            public void onMessageSent(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Message marked as sent");
-            }
-
-            @Override
-            public void onMessageSentConfirmed(@NonNull CatapushMessage message) {
-                Log.d(SampleApplication.class.getSimpleName(), "Message sent and delivered");
-            }
-        };
-
+    @Override
+    public void initCatapush() {
         // This is the Android system notification channel that will be used by the Catapush SDK
         // to notify the incoming messages since Android 8.0. It is important that the channel
         // is created before starting Catapush.
@@ -172,40 +192,27 @@ public class SampleApplication extends MultiDexApplication {
                 .ledOffMS(1000)
                 .build();
 
-        Catapush.getInstance()
-                .setNotificationIntent((catapushMessage, context) -> {
-                    Log.d(SampleApplication.class.getSimpleName(), "Notification tapped: " + catapushMessage);
-                    // This is the Activity you want to open when a notification is tapped:
-                    Intent intent = new Intent(context, MainActivity.class);
-                    // This is a unique URI set to the Intent to avoid its recycling for different
-                    // Notifications when it's set as PendingIntent in the NotificationManager.
-                    // There's no need to provide a valid scheme or path, it just need to be unique.
-                    intent.setData(Uri.parse("catapush://message/" + catapushMessage.id()));
-                    intent.putExtra("message", catapushMessage);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    // This PendingIntent will be set as "ContentIntent" in the local notification
-                    // shown to the user in the Android notifications UI and launched on tap
-                    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
-                })
-                .init(
-                        this,
-                        catapushEventDelegate,
-                        Collections.singletonList(CatapushGms.INSTANCE),
-                        template, // This is the main/default notification channel
-                        null, // If you'd like to support more than one notification channel, pass the templates here
-                        new Callback<Boolean>() {
-                            @Override
-                            public void success(Boolean response) {
-                                CatapushUi.INSTANCE.init();
-                                Log.d(SampleApplication.class.getCanonicalName(), "Catapush has been successfully initialized");
-                            }
+        Catapush.getInstance().init(
+                this,
+                this,
+                catapushEventDelegate,
+                Collections.singletonList(CatapushGms.INSTANCE),
+                catapushNotificationIntentProvider,
+                template, // This is the main/default notification channel
+                null, // If you'd like to support more than one notification channel, pass the templates here
+                new Callback<Boolean>() {
+                    @Override
+                    public void success(Boolean response) {
+                        CatapushUi.INSTANCE.init();
+                        Log.d(SampleApplication.class.getCanonicalName(), "Catapush has been successfully initialized");
+                    }
 
-                            @Override
-                            public void failure(@NonNull Throwable t) {
-                                Log.d(SampleApplication.class.getCanonicalName(), "Catapush initialization error: " + t.getMessage());
-                            }
-                        }
-                );
+                    @Override
+                    public void failure(@NonNull Throwable t) {
+                        Log.d(SampleApplication.class.getCanonicalName(), "Catapush initialization error: " + t.getMessage());
+                    }
+                }
+        );
     }
 
     // See https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0#error-handling
@@ -239,4 +246,5 @@ public class SampleApplication extends MultiDexApplication {
             Log.e(SampleApplication.class.getCanonicalName(), e.getMessage());
         });
     }
+
 }
