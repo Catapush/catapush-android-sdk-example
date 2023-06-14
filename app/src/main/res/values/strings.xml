@@ -7,6 +7,10 @@
     <string name="undo">Undo</string>
     <string name="message_delete">"Message \"%1$s\" has been deleted."</string>
 
+    <string name="post_notifications_title">"Status bar notifications"</string>
+    <string name="post_notifications_message">"You have denied the post notifications permission.\nThe app won't be able to notify you of the incoming messages.\nWould you grant the permission to display the status bar notifications now?"</string>
+    <string name="post_notifications_settings_action">"Open settings"</string>
+
     <string name="catapush_key">"-- Add your Catapush app key --"</string>
     <string name="catapush_username">"-- Add your Catapush user Identifier --"</string>
     <string name="catapush_password">"-- Add your Catapush user Password --"</string>

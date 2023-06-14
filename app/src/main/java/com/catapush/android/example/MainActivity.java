@@ -1,22 +1,31 @@
 package com.catapush.android.example;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.catapush.android.example.managers.SampleCatapushStateManager;
 import com.catapush.android.example.messages.MessageFragment;
 import com.catapush.library.Catapush;
 import com.catapush.library.interfaces.RecoverableErrorCallback;
 import com.catapush.library.messages.CatapushMessage;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity
         extends AppCompatActivity
@@ -25,6 +34,21 @@ public class MainActivity
     private static final int REQUEST_FILE_PICKER = 2021;
 
     private MessagePresenter presenter;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), result -> {
+                if (result) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // features requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                }
+            }
+    );
 
     public void setPresenter(@Nullable MessagePresenter presenter) {
         this.presenter = presenter;
@@ -66,6 +90,10 @@ public class MainActivity
         Catapush.getInstance().pauseNotifications();
         // Start monitoring Catapush status to keep it connected
         SampleCatapushStateManager.INSTANCE.init(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            showPostNotificationsPermissionDialog();
+        }
     }
 
     @Override
@@ -138,6 +166,31 @@ public class MainActivity
             Toast.makeText(this, "Pick action failed!", Toast.LENGTH_LONG).show();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    private void showPostNotificationsPermissionDialog() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                    .setTitle(getString(R.string.post_notifications_title))
+                    .setMessage(getString(R.string.post_notifications_message));
+
+            builder.setPositiveButton(getString(R.string.post_notifications_settings_action), (dialog, which) -> {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+                dialog.dismiss();
+            });
+
+            builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+            builder.show();
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // The registered ActivityResultCallback gets the result of this request
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
         }
     }
 
