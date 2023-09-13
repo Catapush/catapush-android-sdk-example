@@ -17,6 +17,7 @@ android {
         versionCode 7
         versionName "13.0.0"
         multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -57,6 +58,10 @@ dependencies {
     implementation 'com.catapush.catapush-android-sdk:gms:13.0.3'
     implementation 'com.catapush.catapush-android-sdk:hms:13.0.3'
     implementation 'com.catapush.catapush-android-sdk:ui:13.0.3'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
