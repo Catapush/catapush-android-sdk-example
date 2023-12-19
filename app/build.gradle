@@ -55,9 +55,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
     implementation 'androidx.paging:paging-common:3.2.1'
     // Catapush SDK
-    implementation 'com.catapush.catapush-android-sdk:gms:13.0.3'
-    implementation 'com.catapush.catapush-android-sdk:hms:13.0.3'
-    implementation 'com.catapush.catapush-android-sdk:ui:13.0.3'
+    implementation 'com.catapush.catapush-android-sdk:gms:13.0.9'
+    implementation 'com.catapush.catapush-android-sdk:hms:13.0.9'
+    implementation 'com.catapush.catapush-android-sdk:ui:13.0.9'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test:runner:1.5.2'
