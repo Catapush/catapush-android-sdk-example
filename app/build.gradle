@@ -1,10 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.huawei.agconnect'
-
-repositories {
-    maven { url "https://jitpack.io" }
-    maven { url 'https://developer.huawei.com/repo/' }
-}
 
 android {
     namespace 'com.catapush.android.example'
@@ -38,12 +34,7 @@ android {
 
 }
 
-configurations {
-    all*.exclude group: 'xpp3', module: 'xpp3_min'
-}
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // Support libraries
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -58,10 +49,8 @@ dependencies {
     implementation 'com.catapush.catapush-android-sdk:gms:13.0.9'
     implementation 'com.catapush.catapush-android-sdk:hms:13.0.9'
     implementation 'com.catapush.catapush-android-sdk:ui:13.0.9'
-
+    // Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
-
-apply plugin: 'com.google.gms.google-services'
