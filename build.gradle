@@ -16,6 +16,6 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://developer.huawei.com/repo/' }
-        maven { url "https://jitpack.io" }
+        maven { url "https://s3.eu-west-1.amazonaws.com/m2repository.catapush.com/" }
     }
 }
